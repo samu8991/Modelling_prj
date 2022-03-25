@@ -13,13 +13,27 @@ P_t = 25;
 %% Deployment di tipo a
 seed = 12;
 rng(seed)
-s = randi([1,l],n,2);
+R = [1 10];
+s = rand(n,2)*range(R) + min(R); 
+
 A = init_A(s,n,p,P_t,sigma);
 
 %% Creazione di Q
+% Computation of d_in due to the fact that eps must be included between 0
+% and 1/max(d_in). Done in this way there's duplicate code!
 % Two sensors are connected if the distance between them is <= r
-eps = 0.1;
-[Q,d_in] = init_Q(s,r,n,eps);
+d_in = zeros(n,1);
+for i = 1:n-1
+    for j = i+1:n
+        if norm(s(i,:)-s(j,:)) <= r
+            d_in(i) = d_in(i)+1;
+            d_in(j) = d_in(j)+1;
+        end
+    end
+end
+R = [0,1/max(d_in)];
+eps = rand(1,1)*range(R)+ min(R);
+Q = init_Q(s,r,n,eps);
 G=digraph(Q);
 plot(G)
 %% Deployment di tipo b
@@ -98,7 +112,7 @@ function [Q,d_in] = init_Q(s,r,n,eps)
     d_in = zeros(n,1);
     Q = eye(n);
     for i = 1:n-1
-        for j = i:n
+        for j = i+1:n
             if norm(s(i,:)-s(j,:)) <= r
                 d_in(i) = d_in(i)+1;
                 d_in(j) = d_in(j)+1;
