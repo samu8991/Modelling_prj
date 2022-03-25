@@ -1,0 +1,62 @@
+{
+  "userAdmonitions": {
+    "remember": {
+      "type": "remember",
+      "color": "66, 96, 205",
+      "icon": {
+        "name": "book-open",
+        "type": "font-awesome"
+      },
+      "command": false,
+      "injectColor": true,
+      "noTitle": false,
+      "copy": false
+    },
+    "important": {
+      "type": "important",
+      "color": "228, 33, 146",
+      "icon": {
+        "name": "exclamation",
+        "type": "font-awesome"
+      },
+      "command": false,
+      "title": "Important",
+      "injectColor": true,
+      "noTitle": false
+    },
+    "definition": {
+      "type": "definition",
+      "color": "0, 117, 51",
+      "icon": {
+        "name": "info-circle",
+        "type": "font-awesome"
+      },
+      "command": false,
+      "title": "Definition",
+      "injectColor": true,
+      "noTitle": false
+    }
+  },
+  "syntaxHighlight": false,
+  "copyButton": false,
+  "version": "7.0.4",
+  "autoCollapse": false,
+  "defaultCollapseType": "open",
+  "syncLinks": true,
+  "injectColor": true,
+  "parseTitles": true,
+  "allowMSSyntax": false,
+  "msSyntaxIndented": true,
+  "livePreviewMS": true,
+  "dropShadow": true,
+  "hideEmpty": false,
+  "open": {
+    "admonitions": true,
+    "icons": true,
+    "other": true,
+    "advanced": true
+  },
+  "icons": [],
+  "useFontAwesome": true,
+  "rpgDownloadedOnce": false
+}

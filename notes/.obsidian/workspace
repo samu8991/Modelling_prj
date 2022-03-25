@@ -1,0 +1,198 @@
+{
+  "main": {
+    "id": "ef6b28de20ef9374",
+    "type": "split",
+    "children": [
+      {
+        "id": "5640470b0e08ebd0",
+        "type": "split",
+        "children": [
+          {
+            "id": "81606306b36782e2",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "coherence of a matrix.md",
+                "mode": "preview",
+                "backlinks": false,
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "a8bc38f3f7fbcf2c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Iterative Soft Thresholding.md",
+                "mode": "preview",
+                "backlinks": false,
+                "source": false
+              }
+            }
+          }
+        ],
+        "direction": "horizontal"
+      },
+      {
+        "id": "adf0dff056bb6f06",
+        "type": "split",
+        "children": [
+          {
+            "id": "ee9145876d98e936",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Lessons/CPS_05 - Sparse learning and comppresed sensing.md",
+                "mode": "preview",
+                "backlinks": false,
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "2d43cbfb09cc1065",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Feng's theorem.md",
+                "mode": "preview",
+                "backlinks": false,
+                "source": false
+              }
+            }
+          }
+        ],
+        "direction": "horizontal"
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "30b6574c6d1120d9",
+    "type": "split",
+    "children": [
+      {
+        "id": "0a705d80c0c42c65",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "1929c76523c4e5dd",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "121c89d27971147b",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": true,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "b0be38c4d1c8a2ea",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 230
+  },
+  "right": {
+    "id": "413def8c96d61877",
+    "type": "split",
+    "children": [
+      {
+        "id": "58f9eb983796441c",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ae7863e14208c97d",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Lessons/CPS_05 - Sparse learning and comppresed sensing.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "8d03584c0b92e37d",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Lessons/CPS_05 - Sparse learning and comppresed sensing.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "b91c482267e9206e",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "a500a86d92ab7045",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Lessons/CPS_05 - Sparse learning and comppresed sensing.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "active": "ee9145876d98e936",
+  "lastOpenFiles": [
+    "Lessons/CPS_05 - Sparse learning and comppresed sensing.md",
+    "Iterative Soft Thresholding.md",
+    "Admonition.md",
+    "Feng's theorem.md",
+    "coherence of a matrix.md",
+    "Compressed sensing.md",
+    "Coherence condition.md",
+    "RSS.sync-conflict-20220323-221556-LYZIPGB.md",
+    "LASSO.md",
+    "Irrepresentable condition.md"
+  ]
+}

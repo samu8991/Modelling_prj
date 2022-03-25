@@ -1,0 +1,18 @@
+mjx-math{
+	font-size: var(--font-size) !important;
+}
+
+/* @settings
+
+name: Latex font size
+id: latex-font-size
+settings:
+	- 	
+		id: font-size
+		title: Size
+		type: variable-number-slider
+		default: 100
+		min: 80
+		max: 200
+		format: "%"
+*/

@@ -1,0 +1,138 @@
+{
+  "main": {
+    "id": "ef6b28de20ef9374",
+    "type": "split",
+    "children": [
+      {
+        "id": "15110cd1cbc4260c",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "RSS.md",
+            "mode": "source",
+            "backlinks": false,
+            "source": false
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "37a263879306a67f",
+    "type": "mobile-drawer",
+    "children": [
+      {
+        "id": "0cd606f7c225ea44",
+        "type": "leaf",
+        "state": {
+          "type": "file-explorer",
+          "state": {}
+        }
+      },
+      {
+        "id": "1e30f95dbe1dc409",
+        "type": "leaf",
+        "state": {
+          "type": "search",
+          "state": {
+            "query": "",
+            "matchingCase": false,
+            "explainSearch": false,
+            "collapseAll": false,
+            "extraContext": false,
+            "sortOrder": "alphabetical"
+          }
+        }
+      },
+      {
+        "id": "23232de2dc870b02",
+        "type": "leaf",
+        "state": {
+          "type": "tag",
+          "state": {
+            "sortOrder": "frequency",
+            "useHierarchy": true
+          }
+        }
+      },
+      {
+        "id": "82771ee1bf44b50a",
+        "type": "leaf",
+        "state": {
+          "type": "starred",
+          "state": {}
+        }
+      }
+    ],
+    "currentTab": 0
+  },
+  "right": {
+    "id": "4f41c080c8d352a2",
+    "type": "mobile-drawer",
+    "children": [
+      {
+        "id": "a89f0e04999ed2fd",
+        "type": "leaf",
+        "state": {
+          "type": "backlink",
+          "state": {
+            "file": "RSS.md",
+            "collapseAll": false,
+            "extraContext": false,
+            "sortOrder": "alphabetical",
+            "showSearch": false,
+            "searchQuery": "",
+            "backlinkCollapsed": false,
+            "unlinkedCollapsed": false
+          }
+        }
+      },
+      {
+        "id": "1f7629585bfb3203",
+        "type": "leaf",
+        "state": {
+          "type": "outgoing-link",
+          "state": {
+            "file": "RSS.md",
+            "linksCollapsed": false,
+            "unlinkedCollapsed": true
+          }
+        }
+      },
+      {
+        "id": "336c5569758f0094",
+        "type": "leaf",
+        "state": {
+          "type": "outline",
+          "state": {
+            "file": "RSS.md"
+          }
+        }
+      },
+      {
+        "id": "2db2e9d2ae2b578a",
+        "type": "leaf",
+        "state": {
+          "type": "advanced-tables-toolbar",
+          "state": {}
+        }
+      }
+    ],
+    "currentTab": 3
+  },
+  "active": "15110cd1cbc4260c",
+  "lastOpenFiles": [
+    "RSS.md",
+    "Fingerprinting.md",
+    "Lessons/CPS_03 - Localization.md",
+    "Nearest Neighbor (NN).md",
+    "Lessons/CPS_05 - Sparse learning and comppresed sensing.md",
+    "LASSO.md",
+    "L1 Regularization.md",
+    "Centralized settings.md",
+    "Images/Pasted image 20220320200959.png",
+    "Images/Pasted image 20220320200944.png"
+  ]
+}

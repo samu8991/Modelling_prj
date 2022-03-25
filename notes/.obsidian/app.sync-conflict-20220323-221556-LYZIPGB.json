@@ -1,0 +1,16 @@
+{
+  "legacyEditor": false,
+  "livePreview": true,
+  "spellcheckLanguages": [
+    "it",
+    "en-US"
+  ],
+  "readableLineLength": true,
+  "foldIndent": true,
+  "foldHeading": true,
+  "showLineNumber": true,
+  "defaultViewMode": "preview",
+  "trashOption": "local",
+  "promptDelete": false,
+  "alwaysUpdateLinks": true
+}
