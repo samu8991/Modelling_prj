@@ -6,6 +6,7 @@
       {
         "id": "5640470b0e08ebd0",
         "type": "split",
+        "dimension": 50.155763239875384,
         "children": [
           {
             "id": "81606306b36782e2",
@@ -13,8 +14,8 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "coherence of a matrix.md",
-                "mode": "preview",
+                "file": "Coherence of a matrix.md",
+                "mode": "source",
                 "backlinks": false,
                 "source": false
               }
@@ -27,7 +28,7 @@
               "type": "markdown",
               "state": {
                 "file": "Iterative Soft Thresholding.md",
-                "mode": "preview",
+                "mode": "source",
                 "backlinks": false,
                 "source": false
               }
@@ -39,6 +40,7 @@
       {
         "id": "adf0dff056bb6f06",
         "type": "split",
+        "dimension": 49.84423676012461,
         "children": [
           {
             "id": "ee9145876d98e936",
@@ -60,7 +62,7 @@
               "type": "markdown",
               "state": {
                 "file": "Feng's theorem.md",
-                "mode": "preview",
+                "mode": "source",
                 "backlinks": false,
                 "source": false
               }
@@ -79,6 +81,7 @@
       {
         "id": "0a705d80c0c42c65",
         "type": "tabs",
+        "dimension": 73.6372646184341,
         "children": [
           {
             "id": "1929c76523c4e5dd",
@@ -112,10 +115,25 @@
             }
           }
         ]
+      },
+      {
+        "id": "0e9c56102b494762",
+        "type": "tabs",
+        "dimension": 26.362735381565905,
+        "children": [
+          {
+            "id": "156e5b7242223957",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {}
+            }
+          }
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 230
+    "width": 276
   },
   "right": {
     "id": "413def8c96d61877",
@@ -131,7 +149,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Lessons/CPS_05 - Sparse learning and comppresed sensing.md",
+                "file": "Coherence of a matrix.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -148,7 +166,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Lessons/CPS_05 - Sparse learning and comppresed sensing.md",
+                "file": "Coherence of a matrix.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -171,28 +189,28 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Lessons/CPS_05 - Sparse learning and comppresed sensing.md"
+                "file": "Coherence of a matrix.md"
               }
             }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
-  "active": "ee9145876d98e936",
+  "active": "81606306b36782e2",
   "lastOpenFiles": [
-    "Lessons/CPS_05 - Sparse learning and comppresed sensing.md",
+    "Coherence of a matrix.md",
     "Iterative Soft Thresholding.md",
+    "Support.md",
+    "Lessons/CPS_03 - Localization.md",
+    "Lessons/CPS_05 - Sparse learning and comppresed sensing.md",
     "Admonition.md",
-    "Feng's theorem.md",
-    "coherence of a matrix.md",
-    "Compressed sensing.md",
     "Coherence condition.md",
-    "RSS.sync-conflict-20220323-221556-LYZIPGB.md",
-    "LASSO.md",
+    "Compressed sensing.md",
+    "Fingerprinting.md",
     "Irrepresentable condition.md"
   ]
 }

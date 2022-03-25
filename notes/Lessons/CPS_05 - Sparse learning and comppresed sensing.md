@@ -19,7 +19,7 @@ Through complex mathematical tools we find interesting results, such as the [[Ir
 1. is tight (almost necessary and sufficient),
 2. knowing $S$ is a condition of the theorem.
 
-So, to solve our problem we use other conditions such as the [[Coherence condition]] which is based on the [[coherence of a matrix]]. The smaller the coherence, the better.
-Another useful tool to reduce the [[coherence of a matrix]] is [[Feng's theorem]] which might be useful.
+So, to solve our problem we use other conditions such as the [[Coherence condition]] which is based on the [[Coherence of a matrix]]. The smaller the coherence, the better.
+Another useful tool to reduce the [[Coherence of a matrix]] is [[Feng's theorem]] which might be useful.
 
 Finally, there are lots of algorithms for solving the [[LASSO]] problem, but we need something decentralized (so that we can use it in the feature with the agents) and that's why we introduced the [[Iterative Soft Thresholding]] algorithm, even though it was proposed as a centralized algorithm.
