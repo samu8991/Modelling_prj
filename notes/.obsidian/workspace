@@ -12,12 +12,10 @@
             "id": "81606306b36782e2",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "diff-view",
               "state": {
-                "file": "Coherence of a matrix.md",
-                "mode": "source",
-                "backlinks": false,
-                "source": false
+                "file": "notes/.obsidian/workspace",
+                "staged": false
               }
             }
           },
@@ -40,7 +38,7 @@
       {
         "id": "adf0dff056bb6f06",
         "type": "split",
-        "dimension": 49.84423676012461,
+        "dimension": 49.844236760124616,
         "children": [
           {
             "id": "ee9145876d98e936",
@@ -81,7 +79,7 @@
       {
         "id": "0a705d80c0c42c65",
         "type": "tabs",
-        "dimension": 73.6372646184341,
+        "dimension": 47.571853320118926,
         "children": [
           {
             "id": "1929c76523c4e5dd",
@@ -119,7 +117,7 @@
       {
         "id": "0e9c56102b494762",
         "type": "tabs",
-        "dimension": 26.362735381565905,
+        "dimension": 52.428146679881074,
         "children": [
           {
             "id": "156e5b7242223957",
@@ -149,7 +147,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Coherence of a matrix.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -166,7 +163,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Coherence of a matrix.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -182,19 +178,32 @@
                 "useHierarchy": true
               }
             }
+          }
+        ],
+        "currentTab": 2
+      },
+      {
+        "id": "06f295a5a5993218",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "34391fabe4772f80",
+            "type": "leaf",
+            "state": {
+              "type": "advanced-tables-toolbar",
+              "state": {}
+            }
           },
           {
             "id": "a500a86d92ab7045",
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "Coherence of a matrix.md"
-              }
+              "state": {}
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -202,11 +211,11 @@
   },
   "active": "81606306b36782e2",
   "lastOpenFiles": [
+    "Lessons/CPS_05 - Sparse learning and comppresed sensing.md",
     "Coherence of a matrix.md",
     "Iterative Soft Thresholding.md",
     "Support.md",
     "Lessons/CPS_03 - Localization.md",
-    "Lessons/CPS_05 - Sparse learning and comppresed sensing.md",
     "Admonition.md",
     "Coherence condition.md",
     "Compressed sensing.md",
