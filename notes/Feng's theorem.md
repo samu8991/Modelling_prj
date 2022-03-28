@@ -7,8 +7,8 @@ $$
 where 
 $$
 \begin{aligned}
-B = (\text{orth}(A^\intercal))^\intercal \in \mathbb{R}^{n,p} \\
-A^\dagger = A^\intercal(AA^\intercal)^{-1} \in \mathbb{R}^{p,n} \\
-x = BA^\dagger y
+& B = (\text{orth}(A^\intercal))^\intercal \in \mathbb{R}^{n,p}  \\
+& A^\dagger = A^\intercal(AA^\intercal)^{-1} \in \mathbb{R}^{p,n} \\
+& x = BA^\dagger y
 \end{aligned}
 $$

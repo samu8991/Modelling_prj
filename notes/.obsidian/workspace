@@ -12,10 +12,12 @@
             "id": "81606306b36782e2",
             "type": "leaf",
             "state": {
-              "type": "diff-view",
+              "type": "markdown",
               "state": {
-                "file": "notes/.obsidian/workspace",
-                "staged": false
+                "file": "README.md",
+                "mode": "source",
+                "backlinks": false,
+                "source": false
               }
             }
           },
@@ -147,6 +149,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "README.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -163,6 +166,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "README.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -199,7 +203,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "README.md"
+              }
             }
           }
         ],
@@ -211,15 +217,15 @@
   },
   "active": "81606306b36782e2",
   "lastOpenFiles": [
+    "README.md",
+    "Feng's theorem.md",
+    "().md",
     "Lessons/CPS_05 - Sparse learning and comppresed sensing.md",
     "Coherence of a matrix.md",
     "Iterative Soft Thresholding.md",
     "Support.md",
     "Lessons/CPS_03 - Localization.md",
     "Admonition.md",
-    "Coherence condition.md",
-    "Compressed sensing.md",
-    "Fingerprinting.md",
-    "Irrepresentable condition.md"
+    "Coherence condition.md"
   ]
 }
