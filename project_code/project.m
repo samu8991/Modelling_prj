@@ -12,12 +12,13 @@ P_t = 25;
 
 %% Deployment di tipo a
 seed = 12;
-rng(seed)
+
 R = [1 10];
 s = rand(n,2)*range(R) + min(R); 
-
 A = init_A(s,n,p,P_t,sigma);
-
+mu = mutual_coherence(A) 
+ret = 0.5*(1+1/mu)
+ 
 %% Creazione di Q
 % Computation of d_in due to the fact that eps must be included between 0
 % and 1/max(d_in). Done in this way there's duplicate code!
@@ -29,7 +30,7 @@ for i = 1:n-1
             d_in(i) = d_in(i)+1;
             d_in(j) = d_in(j)+1;
         end
-    end
+    end 
 end
 R = [0,1/max(d_in)];
 eps = rand(1,1)*range(R)+ min(R);
@@ -60,31 +61,30 @@ plot(G)
 % 
 % end
 %% Orthogonalization of A
-global Ap tau lambda
+global Ap tau lambda B
 lambda = 1e-4;
 tau = 0.7;
 Ap = pinv(A);
 B = (orth(A'))';
+mu = mutual_coherence(B) 
+ret = 0.5*(1+1/mu)
 %% Runtime
-T_max = 50;
+T_max = 10000;
 x = zeros(p,T_max);
-target = [1,1];
+target = [1.7,1.3];
 y = zeros(n,1);
 for i = 1:n
     d = norm(target-s(i,:));
     y(i) = RSS(d,P_t,sigma);
 end
+z = z_feng(y);
+
 x(:,1) = zeros(p,1);
 for t = 2:T_max
-    x(:,t) = IST_step(x(:,t-1),y,A);
+    x(:,t) = IST_step(x(:,t-1),z,B);
 end
-
-figure(1)
-hold on
-for i = 1:p
-    plot(x(i,:), 'b');
-end
-
+stem(x(:,T_max))
+grid
 %% Functions
 function ret = RSS(d,P_t,sigma)
     eta = randn(1)*sigma;
@@ -127,11 +127,12 @@ function [Q,d_in] = init_Q(s,r,n,eps)
     end
 end
 function z = z_feng(y)
+    global B Ap
     z = B*Ap*y;
 end
 function r = IST_step(x_0,y,A)
     global tau lambda
-    r = x_0 + tau*A'*(y-A*x_0)
+    r = x_0 + tau*A'*(y-A*x_0);
     assert(length(r) == 100);
     for i = 1:length(r)
         if(abs(r(i)) <= lambda)
