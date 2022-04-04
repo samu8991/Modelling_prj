@@ -1,5 +1,5 @@
 %% Modelling project
-clear 
+%clear 
 close all
 clc
 %% Dati
@@ -16,8 +16,8 @@ seed = 12;
 R = [1 10];
 s = rand(n,2)*range(R) + min(R); 
 A = init_A(s,n,p,P_t,sigma);
-mu = mutual_coherence(A) 
-ret = 0.5*(1+1/mu)
+mu = mutual_coherence(A);
+ret = 0.5*(1+1/mu);
  
 %% Creazione di Q
 % Computation of d_in due to the fact that eps must be included between 0
@@ -36,7 +36,7 @@ R = [0,1/max(d_in)];
 eps = rand(1,1)*range(R)+ min(R);
 Q = init_Q(s,r,n,eps);
 G=digraph(Q);
-plot(G)
+%plot(G)
 %% Deployment di tipo b
 % verified = false;
 % vertice_griglia_5_by_5 = zeros(1,2);
@@ -66,12 +66,12 @@ lambda = 1e-4;
 tau = 0.7;
 Ap = pinv(A);
 B = (orth(A'))';
-mu = mutual_coherence(B) 
-ret = 0.5*(1+1/mu)
+mu = mutual_coherence(B);
+ret = 0.5*(1+1/mu);
 %% Runtime
 T_max = 10000;
 x = zeros(p,T_max);
-target = [1.7,1.3];
+target = [5.7, 7.2];
 y = zeros(n,1);
 for i = 1:n
     d = norm(target-s(i,:));
@@ -83,8 +83,43 @@ x(:,1) = zeros(p,1);
 for t = 2:T_max
     x(:,t) = IST_step(x(:,t-1),z,B);
 end
-stem(x(:,T_max))
-grid
+
+% best value
+max_val = max(x(:,end));
+index = find(x(:, end) == max_val);
+x_i = floor(index / 10) + .5;
+y_i = mod(index, 10) + .5;
+% plot(x_i, y_i, 's', "color", max_val * [1 0 0], "markersize", 8, 'markerfacecolor', max_val * [1 0 0]); 
+
+return 
+
+%% Plot
+%stem(x(:,T_max))
+
+figure
+grid on;
+hold on;
+xlim([1 10])
+ylim([1 10])
+
+%markers
+for i=1:9
+    for     j=1:9
+        plot(i + .5, j + .5, 'o', "color",'#FF00FF', "markersize", 10);
+    end
+end
+
+% gt .5
+for i=1:length(x(:,T_max))
+   if abs(x(i, T_max)) >= 0.5
+        x_i = floor(i / 10) + .5
+        y_i = mod(i,10) + .5
+        plot(x_i, y_i, 's', "color", x(i) * [0 1 0], "markersize", 8, 'markerfacecolor', x(i) * [0 1 0]); 
+   end
+end
+
+% Real target
+plot(target(1), target(2), 'db', "markersize", 8, 'markerfacecolor', 'b'); 
 %% Functions
 function ret = RSS(d,P_t,sigma)
     eta = randn(1)*sigma;
