@@ -10,11 +10,11 @@ for i = 1:sim_n
 end
 
 sim_max = max(sim_error);
-sim_min_in = .15;
-sim_error_len = ceil(sim_max/sim_min_in);
-sim_error_bars = zeros(1, sim_error_len);
+sim_bucket_interval = .15;
+sim_bar_number = ceil(sim_max/sim_bucket_interval);
+sim_error_bars = zeros(1, sim_bar_number);
 for i = 1:sim_n
-    for j =1:sim_error_len
+    for j =1:sim_error_bars
         if sim_error(i) <= sim_min_in * (j-1) 
             sim_error_bars(j) = sim_error_bars(j)+1;
             break
