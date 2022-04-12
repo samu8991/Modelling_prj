@@ -37,7 +37,7 @@ eps = rand(1,1)*range(R)+ min(R);
 Q = init_Q(s,r,n,eps);
 G=digraph(Q);
 
-return
+
 
 %% Orthogonalization of A
 global Ap tau lambda B
@@ -167,12 +167,13 @@ function Q = init_Q(s,r,n,eps)
         for j = i+1:n
             if norm(s(i,:)-s(j,:)) > r
                 Q(i,j) = 0;
+                Q(j,i) = 0;
             end
         end
     end
     
     for i = 1:n
-        s = sum(Q(:,i)) - eps; % eps is subtracted because Q(i,i) = eps;
+        s = sum(Q(i,:)) - eps; % eps is subtracted because Q(i,i) = eps;
         Q(i,i) = 1 - s;
     end
 end
