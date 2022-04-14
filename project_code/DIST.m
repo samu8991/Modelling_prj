@@ -15,6 +15,10 @@ seed = 12;
 
 R = [1 10];
 s = rand(n,2)*range(R) + min(R); 
+if overlapped_sensors(s)
+    disp('ci sono sensori sovrapposti')
+    return
+end
 A = init_A(s,n,p,P_t,sigma);
 mu = mutual_coherence(A);
 ret = 0.5*(1+1/mu);
@@ -35,9 +39,10 @@ end
 R = [0,1/max(d_in)];
 eps = rand(1,1)*range(R)+ min(R);
 Q = init_Q(s,r,n,eps);
+
 G=digraph(Q);
 
-return
+
 
 %% Orthogonalization of A
 global Ap tau lambda B
@@ -53,12 +58,12 @@ T_max = 10000;
 x = zeros(n,p,T_max);
 target = [5.7, 7.2];
 y = zeros(n,1);
+
 for i = 1:n
     d = norm(target-s(i,:));
     y(i) = RSS(d,P_t,sigma);
 end
 z = z_feng(y);
-
 for t = 2:T_max
     for i = 1:n
         x_bar = zeros(1,p);
@@ -167,12 +172,13 @@ function Q = init_Q(s,r,n,eps)
         for j = i+1:n
             if norm(s(i,:)-s(j,:)) > r
                 Q(i,j) = 0;
+                Q(j,i) = 0;
             end
         end
     end
     
     for i = 1:n
-        s = sum(Q(:,i)) - eps; % eps is subtracted because Q(i,i) = eps;
+        s = sum(Q(i,:)) - eps; % eps is subtracted because Q(i,i) = eps;
         Q(i,i) = 1 - s;
     end
 end
@@ -201,4 +207,14 @@ function r = DIST_step(current, x_bar, x_0, y, A)
             r(i) = r(i) - sign(r(i))*lambda; 
         end
     end
+end
+function ret = overlapped_sensors(s)
+    ret = 0;    
+    for i = length(s)-1
+        for j = i+1 : length(s)
+            if(norm(s(i,:)-s(j,:))< 0.2)
+                ret = 1;
+            end
+        end
+    end    
 end
