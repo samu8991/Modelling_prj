@@ -1,5 +1,5 @@
 %% Modelling project
-%clear 
+clear 
 close all
 clc
 %% Dati

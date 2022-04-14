@@ -84,23 +84,24 @@ for t = 2:T_max
     x(:,t) = IST_step(x(:,t-1),z,B);
 end
 
-% best value
-max_val = max(x(:,end));
-index = find(x(:, end) == max_val);
-x_i = floor(index / 10) + .5;
-y_i = mod(index, 10) + .5;
-% plot(x_i, y_i, 's', "color", max_val * [1 0 0], "markersize", 8, 'markerfacecolor', max_val * [1 0 0]); 
-
-return 
+%return 
 
 %% Plot
-%stem(x(:,T_max))
+stem(x(:,T_max))
 
 figure
 grid on;
 hold on;
 xlim([1 10])
 ylim([1 10])
+
+% best value
+max_val = max(x(:,end));
+index = find(x(:, end) == max_val);
+x_i = floor(index / 10) + .5;
+y_i = mod(index, 10) + .5;
+plot(x_i, y_i, 's', "color", max_val * [1 0 0], "markersize", 8, 'markerfacecolor', max_val * [1 0 0]); 
+
 
 %markers
 for i=1:9
