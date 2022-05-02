@@ -24,6 +24,7 @@ classdef Agent < handle
             obj.id = obj.static.n;
             obj.position = rand(2,1) * Agent.static.l;
             obj.x = zeros(obj.static.p,1);
+            obj.xold = zeros(obj.static.p,1);
         end % Agent
         
         function setQ(obj, Q)
@@ -56,7 +57,7 @@ classdef Agent < handle
             end
         end % measure
         
-        function feng(obj, B,z)
+        function feng(obj, B, z)
             obj.y = z(obj.id);
             obj.A = B(obj.id,:);
             obj.A = obj.A';
@@ -68,7 +69,7 @@ classdef Agent < handle
            % Compute xbar
            obj.xbar = zeros(s.p,1);
            for el = obj.neighbors
-               obj.xbar = obj.xbar + el.weight * el.agent.x;
+               obj.xbar = obj.xbar + el.weight * el.agent.xold;
            end
            % Compute new state x
            obj.x = obj.xbar + s.tau * obj.A * (obj.y - obj.A' * obj.xold);
