@@ -1,5 +1,5 @@
 %% Modelling project
-%clear 
+clear 
 close all
 clc
 %% Dati
@@ -14,10 +14,13 @@ P_t = 25;
 seed = 12;
 
 R = [1 10];
-s = rand(n,2)*range(R) + min(R); 
-if overlapped_sensors(s)
-    disp('ci sono sensori sovrapposti')
-    return
+cont = true;
+while cont 
+    
+    s = rand(n,2)*range(R) + min(R); 
+    if overlapped_sensors(s)
+    
+    end
 end
 A = init_A(s,n,p,P_t,sigma);
 mu = mutual_coherence(A);
@@ -55,95 +58,70 @@ ret = 0.5*(1+1/mu);
 
 %% Runtime DIST
 T_max = 10000;
-x = zeros(n,p,T_max);
-target = [5.7, 7.2];
+x = zeros(n,p);
+target = [1+ 9*rand(), 1+9*rand()];
 y = zeros(n,1);
 
 for i = 1:n
-        d = norm(target-s(i,:));
-        y(i) = RSS(d,P_t,sigma);
-    end
-    z = z_feng(y);
+    d = norm(target-s(i,:));
+    y(i) = RSS(d,P_t,sigma);
+end
+z = z_feng(y);
 for t = 2:T_max
     for i = 1:n
         x_bar = zeros(1,p);
         for j=1:n
-           x_bar = x_bar + Q(i,j) * x(j,:,t); 
+           x_bar = x_bar + Q(i,j) * x(j,:); 
         end
-        x(i,:,t) = DIST_step(i, x_bar, x(i,:,t-1), z, B);
+        x(i,:) = DIST_step(i, x_bar, x(i,:), z, B);
     end
 end
 
-% best value
-max_val = max(x(:,end));
-index = find(x(:, end) == max_val);
-x_i = floor(index / 10) + .5;
-y_i = mod(index, 10) + .5;
-% plot(x_i, y_i, 's', "color", max_val * [1 0 0], "markersize", 8, 'markerfacecolor', max_val * [1 0 0]); 
 
-%return
-
-figure
-for i=1:n
-    stem(x(i,:,T_max));
-    pause;
+%% Compute final estimation
+sum_agent = 0;
+for i = 1:n
+    max_val = max(x(i,:));
+    idx_max = find(x(i,:) == max_val);
+    sum_agent = sum_agent + idx_max; 
 end
-
-return
-
-%% Runtime centralized (IST)
-% T_max = 10000;
-% x = zeros(p,T_max);
-% target = [5.7, 7.2];
-% y = zeros(n,1);
-% for i = 1:n
-%     d = norm(target-s(i,:));
-%     y(i) = RSS(d,P_t,sigma);
-% end
-% z = z_feng(y);
-% 
-% x(:,1) = zeros(p,1);
-% for t = 2:T_max
-%     x(:,t) = IST_step(x(:,t-1),z,B);
-% end
-% 
-% % best value
-% max_val = max(x(:,end));
-% index = find(x(:, end) == max_val);
-% x_i = floor(index / 10) + .5;
-% y_i = mod(index, 10) + .5;
-% % plot(x_i, y_i, 's', "color", max_val * [1 0 0], "markersize", 8, 'markerfacecolor', max_val * [1 0 0]); 
-% 
-% return 
+sum_agent = sum_agent /n;
+x_i = floor(sum_agent / 10) + 1;
+y_i = mod(sum_agent ,10) ;
 
 %% Plot
-%stem(x(:,T_max))
 
-figure
-grid on;
-hold on;
-xlim([1 10])
-ylim([1 10])
+plot_result(l,target,[x_i,y_i],s)
 
-%markers
-for i=1:9
-    for     j=1:9
-        plot(i + .5, j + .5, 'o', "color",'#FF00FF', "markersize", 10);
-    end
-end
-
-% gt .5
-for i=1:length(x(:,T_max))
-   if abs(x(i, T_max)) >= 0.5
-        x_i = floor(i / 10) + .5
-        y_i = mod(i,10) + .5
-        plot(x_i, y_i, 's', "color", x(i) * [0 1 0], "markersize", 8, 'markerfacecolor', x(i) * [0 1 0]); 
-   end
-end
-
-% Real target
-plot(target(1), target(2), 'db', "markersize", 8, 'markerfacecolor', 'b'); 
 %% Functions
+function plot_result(l,target,estimate,s)
+    figure
+    grid on;
+    hold on;
+    xlim([1 l])
+    ylim([1 l])
+    
+    plot(estimate(1), estimate(2), 's', "color", 0.7 * [0 1 0], "markersize", 8, 'markerfacecolor', 0.7* [0 1 0]);    
+    
+    % Real target
+    plot(target(1), target(2), 'db', "markersize", 8, 'markerfacecolor', 'b'); 
+    
+    %sensors
+    for i = 1:length(s)
+        plot(s(i,1),s(i,2),'*',"color",'k',"MarkerSize",10)
+    end
+
+    %markers
+    for i=1:l-1
+        for  j=1:l-1
+            plot(i + .5, j + .5, 'o', "color",'r', "markersize", 12);
+        end
+    end
+    error = norm(estimate-target);
+    disp("L'errore commesso è: " + error)
+    legend('estimate','target','sensors','')
+end
+
 function ret = RSS(d,P_t,sigma)
     eta = randn(1)*sigma;
     if d > 8
@@ -212,8 +190,9 @@ function ret = overlapped_sensors(s)
     ret = 0;    
     for i = length(s)-1
         for j = i+1 : length(s)
-            if(norm(s(i,:)-s(j,:))< 0.2)
+            if(norm(s(i,:)-s(j,:)) < 2)
                 ret = 1;
+                break;
             end
         end
     end    

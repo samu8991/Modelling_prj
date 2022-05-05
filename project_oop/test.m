@@ -9,6 +9,6 @@ for i=1:test_n
     pos2cell(target(1), target(2))
     localized = runOnce(target, -1);
     test_err(i) = norm(target-localized);  
-    name = "tests/Tests"+i;
+    name = "Tests"+i;
     save(name);
 end
