@@ -16,16 +16,15 @@ caso = menu('Choose algorithm you want to test','DIST','O-DIST');
 %% Test
 every_no_iterations = zeros(1,no_tests);
 for i = 1:no_tests
-    [every_no_iterations(i),target,x_i,y_i,s] = dist_alg(n,l,p,r,sigma,P_t,raggio,caso);
+    [every_no_iterations(i),target,x_i,y_i,s] = dist(n,l,p,r,sigma,P_t,raggio,caso);
     %plot_result(l,target,[x_i,y_i],s)
 end
 disp("On average the no of iterations needed is " + mean(every_no_iterations));
 
 %% Functions
-function [ret,target,x_i,y_i,s] = dist_alg(n,l,p,r,sigma,P_t,raggio,caso)
+function [ret,target,x_i,y_i,s] = dist(n,l,p,r,sigma,P_t,raggio,caso)
     %% Deployment di tipo a
     cont = true;
-    s = zeros(n,2);
     while cont 
         s = rand(n,2)*(l-1)+ 1; 
         var = ~overlapped_sensors(s,raggio);
@@ -109,7 +108,7 @@ function [ret,target,x_i,y_i,s] = dist_alg(n,l,p,r,sigma,P_t,raggio,caso)
         %% Compute final estimation
         sum_agent = 0;
         agent_over_x = 0;
-        th = 0.0;
+        th = 0.3;
         for i = 1:n
             max_val = max(x(i,:));
             if(max_val >= th)
@@ -119,16 +118,20 @@ function [ret,target,x_i,y_i,s] = dist_alg(n,l,p,r,sigma,P_t,raggio,caso)
             end
         end
         disp("Il numero di agenti che hanno almeno un valore superiore a "+ th+ " è: " + agent_over_x)
-        assert(agent_over_x <= 25 && agent_over_x >= 1);
+        %assert(agent_over_x <= 25 && agent_over_x >= 1);
         sum_agent = sum_agent /agent_over_x;
         x_i = floor(sum_agent / l) + 1;
         y_i = mod(sum_agent ,l) ;
-        assert(~isnan(x_i) & ~isnan(y_i))
+        assert(x_i ~= NaN & y_i ~=NaN)
         if caso == 2
+            disp("This is O-dist")
             disp("This is the "+ k+"-th iteration")
             disp("The error committed is "+ norm(target-[x_i,y_i]))
         end
+
     end
+    
+
 end
 function plot_result(l,target,estimate,s)
     figure
