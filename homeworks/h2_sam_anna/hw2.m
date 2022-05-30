@@ -48,5 +48,5 @@ for k = 3:N
 end
 lbd = [-1e10,-1e10,-1e10,-1e10,-1e10,-1*ones(1,N)];
 ubd = [1e10,1e10,1e10,1e10,1e10,1*ones(1,N)];
-param.relaxOrder = 1;
+param.relaxOrder = 2;
 [param,SDPobjValue,POP,cpuTime,SDPsolverInfo,SDPinfo] = sparsePOP(objPoly,ineqPolySys,lbd,ubd,param);

@@ -22,7 +22,7 @@ A = [0 1 0 0
     0 0 0 1
     k2/m2 0 -k2/m2 0];
 
-B = eye(4,4);
+B = e;
 
 C = eye(4,4);
 
@@ -47,8 +47,8 @@ for i = 2:N
 end
 D = diag(d_in);
 L = D - GM(2:end,1:end-1);
-lamba = eig(L+G)
-num = min(real(lamba))
+lambda = eig(L+G)
+num = min(real(lambda))
 
 c = 1 + (1/(2*num))
 ctrl = c*K;
