@@ -22,27 +22,24 @@ A = [0 1 0 0
     0 0 0 1
     k2/m2 0 -k2/m2 0];
 
-B = e;
+B = [0 1/m1 0 0]';
 
 C = eye(4,4);
 
 D = zeros(4,4);
 
 %% Control law
-M = rand(4,5);
-T = rand(4,4);
-Q = M*M';
-R = T*T';
-eig(Q);
-eig(R);
+Q = diag([1 1 1 1]);
+R = 1;
 R_1 = inv(R);
 
-P = are(A,eye(4,4),Q);
-K = (inv(R)*B)'*P;
+P = are(A,B/R*B',Q);
+K = (B/R)'*P;
 G = diag(GM(2:end,1));
-d_in = zeros(1,N);
+%d_in = sum(GM(2:end,1:end-1),1)
+d_in = zeros(N,1);
 for i = 2:N
-    ret = find(GM(i,1:end-1) ~= 0);
+    ret = sum(GM(i,1:end-1));
     d_in(i) = ret;
 end
 D = diag(d_in);

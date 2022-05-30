@@ -22,37 +22,29 @@ A = [0 1 0 0
     0 0 0 1
     k2/m2 0 -k2/m2 0];
 
-B = eye(4,4);
+B = [0 1/m1 0 0]';
 
 C = eye(4,4);
 
 D = zeros(4,4);
 
-sys = ss(A,B,C,D);
-lsim(ss,)
-%bode(G)
-
 %% Control law
-M = rand(4,5);
-T = rand(4,4);
-Q = M*M';
-R = T*T';
-eig(Q);
-eig(R);
+Q = diag([1 1 1 1]);
+R = 1;
 R_1 = inv(R);
 
-P = are(A,eye(4,4),Q)
-K = (inv(R)*B)'*P
-G = diag(GM(2:end,1))
-d_in = zeros(1,N);
+P = are(A,B/R*B',Q);
+K = (B/R)'*P;
+G = diag(GM(2:end,1));
+d_in = sum(GM(2:end,1:end-1),1)
 for i = 2:N
-    
     ret = find(GM(i,1:end-1) ~= 0);
     d_in(i) = ret;
 end
 D = diag(d_in);
 L = D - GM(2:end,1:end-1);
-lamba = eig(L+G)
-num = min(real(lamba))
+lambda = eig(L+G)
+num = min(real(lambda))
 
 c = 1 + (1/(2*num))
+ctrl = c*K;
