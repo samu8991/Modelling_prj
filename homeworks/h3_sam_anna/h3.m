@@ -35,9 +35,12 @@ B = [0 1/m1 0 0]';
 
 C = eye(4,4);
 
-D = zeros(4,4);
+D = zeros(4,1);
+K = [34.7778   11.0000  -13.5178   38.5000];
+SYS = ss(A-B*K,B,C,D);
 
-%% Control law
+
+%% Control law distributed system
 Q = diag([1 1 1 1]);
 R = 1;
 R_1 = inv(R);
@@ -58,3 +61,8 @@ num = min(real(lambda))
 
 c = 1 + (1/(2*num))
 ctrl = c*K;
+%% Local controller
+local_ctrl = place(A,B,[-4,-3,-2,0])
+
+%% Sim
+simout = sim('hw3_sim.slx');
