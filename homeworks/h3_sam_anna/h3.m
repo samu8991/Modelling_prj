@@ -26,12 +26,13 @@ C = eye(4,4);
 
 Ds = zeros(4,1);
 
-A_graf = [0 0 0 0 0 0
-          2 0 0 0 0 0
-          0 6 0 0 0 0
-          0 0 1 0 0 0
-          0 0 0 1 0 0
-          0 0 0 0 3 0];
+% A_graf = [0 0 0 0 0 0
+%           2 0 0 0 0 0
+%           0 6 0 0 0 0
+%           0 0 1 0 0 0
+%           0 0 0 1 0 0
+%           0 0 0 0 3 0];
+A_graph = GM(2:end, 2:end);
 
 %% Control law distributed system
 Q = diag([1 1 1 1]);
@@ -44,10 +45,10 @@ G = diag(GM(2:end,1));
 %d_in = sum(GM(2:end,1:end-1),1)
 
 
-d_in= sum(A_graf,2);
+d_in= sum(A_graph,2);
 
 D = diag(d_in);
-L = D - A_graf;
+L = D - A_graph;
 lambda = eig(L+G);
 num = min(real(lambda));
 
@@ -57,4 +58,4 @@ ctrl = c*K;
 local_ctrl = place(A,B,[-3,-2,-1,-4]);
 
 %% Sim
-%simout = sim('hw3_sim.slx');
+simout = sim('hw3_sim.slx');
