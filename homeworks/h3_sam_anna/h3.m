@@ -16,14 +16,14 @@ N = 6;
 % NOTE: This is the adjacent matrix of this graph, but with a slight
 % modification. It has the colum shifted by one, so the last column has the
 % meaning of entering edges in the leading node.
-GM = zeros(N+1,N+1); 
+GM = zeros(N+1,N+1);
 GM(2,1) = 1;GM(5,4) = 1;
 GM(3,2) = 2;GM(6,5) = 1;
 GM(4,3) = 6;GM(7,6) = 3;
 % adjacent matrix graph definition (NOT extended!)
 A_graph = GM(2:end, 2:end);
-% Pinning matrix
-G = diag(GM(2:end,1));
+
+G = diag(GM(2:end,1));% Pinning matrix
 
 %% Model
 A = [0 1 0 0
@@ -47,22 +47,22 @@ R_1 = inv(R);
 
 P = are(A,B/R*B',Q);
 K = (B/R)'*P;
-A = diag(GM(2:end,1));
-d_in = sum(GM(2:end,1:end-1),2);
+d_in = sum(A_graph, 2);
 % d_in = zeros(N,1);
 % for i = 2:N
 %     ret = sum(GM(i,1:end-1));
 %     d_in(i-1) = ret;
 % end
-D = diag(d_in);
-L = D - A_graph;
-lambda = eig(L+G)
-num = min(real(lambda))
+D_mtx = diag(d_in);
+L = D_mtx - A_graph;
+lambda = eig(L+G);
+num = min(real(lambda));
 
-c = 1 + (1/(2*num))
+c = 1 + (1/(2*num));
 ctrl = c*K;
 %% Local controller
-local_ctrl = place(A,B,[-4,-3,-2,0])
+local_ctrl = place(A,B,[-4,-3,-2,0]);
+leader_sys = ss(A-B*local_ctrl, B, C, D);
 
 %% Sim
 simout = sim('hw3_sim.slx');
