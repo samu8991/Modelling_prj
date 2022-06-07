@@ -1,0 +1,13 @@
+Metrics
+
+The metric functions are saved as matlab files with specific names.
+The names follow the pattern "metric_<type>.m"
+Each of this functions need an simulink output structure as the first parameter.
+
+N -> Number of agents
+CtSi -> Indicates the Convergence time for the Agent Si
+
+
+1. System Convergence Time (SCT) -> maximum between CtSi, where i=1..N;
+2. Complete Agents Convergence time (CACT) -> sum of CtSi, where i=1..N;
+3. 
