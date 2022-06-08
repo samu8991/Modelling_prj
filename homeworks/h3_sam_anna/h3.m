@@ -35,12 +35,12 @@ C = eye(4,4);
 
 Ds = zeros(4,1);
 
-% A_graf = [0 0 0 0 0 0
-%           2 0 0 0 0 0
-%           0 6 0 0 0 0
-%           0 0 1 0 0 0
-%           0 0 0 1 0 0
-%           0 0 0 0 3 0];
+A_graf = [0 0 0 0 0 0
+          2 0 0 0 0 0
+          0 6 0 0 0 0
+          0 0 1 0 0 0
+          0 0 0 1 0 0
+          0 0 0 0 3 0];
 A_graph = GM(2:end, 2:end);
 
 %% Control law distributed system

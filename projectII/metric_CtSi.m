@@ -2,7 +2,7 @@ function t = metric_CtSi(out, agent, threshold)
 arguments
     out
     agent
-    threshold = 1e-3
+    threshold = 1e-2 % one percent
 end
 
 y0 = out.y0;
@@ -15,13 +15,10 @@ i=0;
 while logicErr(end-i) == 1
     i = i+1;
 end
-i = i-1
+i = i-1;
 if i <= 0
     i = 1;
 end
-figure(i);
-plot(logicErr);
-
 t = out.tout(end-i);
 
 end
