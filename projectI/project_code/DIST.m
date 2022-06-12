@@ -13,27 +13,16 @@ raggio = 1;
 no_tests = 1;
 %% User
 caso = menu('Choose algorithm you want to test','DIST','O-DIST');       
+deployment_type = menu('Choose ','a','b');
 %% Test
 every_no_iterations = zeros(1,no_tests);
-for i = 1:no_tests
-    [every_no_iterations(i),target,x_i,y_i,s] = dist_alg(n,l,p,r,sigma,P_t,raggio,caso);
-    %plot_result(l,target,[x_i,y_i],s)
+for k = 1:no_tests
+    [target,x_i,y_i,s] = dist_alg(n,l,p,r,sigma,P_t,raggio,caso,deployment_type);
+    %plot_result(k,l,target,[x_i,y_i],s)
 end
-disp("On average the no of iterations needed is " + mean(every_no_iterations));
-
 %% Functions
-function [ret,target,x_i,y_i,s] = dist_alg(n,l,p,r,sigma,P_t,raggio,caso)
-    %% Deployment di tipo a
-    cont = true;
-    s = zeros(n,2);
-    while cont 
-        s = rand(n,2)*(l-1)+ 1; 
-        var = ~overlapped_sensors(s,raggio);
-        if var
-            cont = false;
-        end
-    end
-    disp("Sensori posizionati correttamente!")
+function [target,x_i,y_i,s] = dist_alg(n,l,p,r,sigma,P_t,raggio,caso,deployment_type)
+    s = deploy(n,l,raggio,deployment_type);
     A = init_A(s,n,p,P_t,sigma);
     %mu = mutual_coherence(A);
     %ret = 0.5*(1+1/mu);
@@ -69,14 +58,16 @@ function [ret,target,x_i,y_i,s] = dist_alg(n,l,p,r,sigma,P_t,raggio,caso)
     %ret = 0.5*(1+1/mu);
     
     %% Runtime DIST
-    T_max = 10000;
-    
     if caso == 2
         o_dist_time = 10;
-        T_max = 100;
+        T_max = 1000;
     else 
-        o_dist_time = 1;
+        o_dist_time = 50;
+        T_max = 10000;
     end
+    metrics_a_1 = zeros(o_dist_time,T_max);
+    metrics_a_2 = zeros(1,o_dist_time);
+    metrics_b = zeros(1,o_dist_time);
     for k = 1:o_dist_time
         x = zeros(n,p);
         if caso == 1
@@ -89,9 +80,16 @@ function [ret,target,x_i,y_i,s] = dist_alg(n,l,p,r,sigma,P_t,raggio,caso)
             d = norm(target-s(i,:));
             y(i) = RSS(d,P_t,sigma);
         end
+        
         z = z_feng(y);
         for t = 2:T_max
             x_old = x;
+            x_mean = sum(x,2)/n;
+            x_i = floor(max(x_mean)/ l) + 1;
+            y_i = mod(max(x_mean),l);
+            metrics_a_1(k,t) = norm([x_i,y_i]-target);
+            metrics_a_2(k) = metrics_a_2(k) + metrics_a_1(k,t);
+
             for i = 1:n
                 x_bar = zeros(1,p);
                 for j=1:n
@@ -99,30 +97,34 @@ function [ret,target,x_i,y_i,s] = dist_alg(n,l,p,r,sigma,P_t,raggio,caso)
                 end
                 x(i,:) = DIST_step(i, x_bar, x(i,:), z, B);
             end
-            if(norm(x_old - x) < 1e-3)
-                disp("The no of iterations needed to get convergence error" + ...
-                    " less then 10^-3 is " + t)
-                ret = t;
+            
+            if(norm(x_old - x) < 1e-3)   
+                metrics_b(k) = t;
                 break
             end
         end
+        if(metrics_b(k) == 0)
+            metrics_b(k) = T_max;
+        end
+        save('metrics_a_1.mat','metrics_a_1');
+        save('metrics_a_2.mat','metrics_a_2');
+        save('metrics_b.mat','metrics_b');
         %% Compute final estimation
         sum_agent = 0;
-        agent_over_x = 0;
+        agent_over_th = 0;
         th = 0.0;
         for i = 1:n
             max_val = max(x(i,:));
             if(max_val >= th)
-                agent_over_x = agent_over_x+1;
+                agent_over_th= agent_over_th+1;
                 idx_max = find(x(i,:) == max_val);
                 sum_agent = sum_agent + idx_max; 
             end
         end
-        disp("Il numero di agenti che hanno almeno un valore superiore a "+ th+ " è: " + agent_over_x)
-        assert(agent_over_x <= 25 && agent_over_x >= 1);
-        sum_agent = sum_agent /agent_over_x;
+        %assert(agent_over_x <= 25 && agent_over_x >= 1);
+        sum_agent = sum_agent /agent_over_th;
         x_i = floor(sum_agent / l) + 1;
-        y_i = mod(sum_agent ,l) ;
+        y_i = mod(sum_agent ,l);
         assert(~isnan(x_i) & ~isnan(y_i))
         if caso == 2
             disp("This is the "+ k+"-th iteration")
@@ -130,10 +132,10 @@ function [ret,target,x_i,y_i,s] = dist_alg(n,l,p,r,sigma,P_t,raggio,caso)
         end
     end
 end
-function plot_result(l,target,estimate,s)
-    figure
+function plot_result(k,l,target,estimate,s)
+    figure(k)
     grid on;
-    hold on;
+    hold on
     xlim([1 l])
     ylim([1 l])
     
@@ -171,11 +173,12 @@ function A = init_A(s,n,p,P_t,sigma)
     A = zeros(n,p);
     l = 10;
 
-    for i = 1:p % Per ogni cella
-        t = [ floor(i/l), mod(i,l) ]; % posiziono il target
-        for ii = 1:n % per ogni sensore
-            d = norm(s(ii,:)-t(1,:)); % calcolo la distanza dal sensore del target
-            A(ii, i) = RSS(d, P_t, sigma); % e la RSS di quel sensore per quella posizione del target
+    for k = 1:p % Per ogni cella
+        t = [ floor(k/l), mod(k,l) ]; % posiziono il target
+        for kk = 1:n % per ogni sensore
+            d = norm(s(kk,:)-t(1,:))+0.1; % calcolo la distanza dal sensore del target
+            A(kk, k) = RSS(d, P_t, sigma); % e la RSS di quel sensore per quella posizione del target
+            assert(A(kk,k) ~= inf)
         end
     end
 end
@@ -221,4 +224,43 @@ function ret = overlapped_sensors(s,raggio)
             end
         end
     end    
+end
+function s = deploy(n,l,raggio,deployment_type)
+    s = zeros(n,2);
+    if deployment_type == 1
+        %% Deployment di tipo a
+        cont = true;
+        while cont 
+            s = rand(n,2)*(l-1)+ 1; 
+            var = ~overlapped_sensors(s,raggio);
+            if var
+                cont = false;
+            end
+        end
+    elseif deployment_type == 2
+        %% Deployment di tipo b
+%         verified = false;
+%         vertice_griglia_5_by_5 = zeros(1,2);
+%         while ~verified
+%             vertice_griglia_5_by_5 = randi([1,10],[1,2]);
+%             if vertice_griglia_5_by_5(1) + 5 <= 10 && vertice_griglia_5_by_5(2) + 5 <= 10
+%                 verified = true;
+%             end
+%         end
+        vertice_griglia_5_by_5 = [3,4];
+        s = zeros(n,2);
+        
+        s(1,2) = vertice_griglia_5_by_5(2);
+        s(1,1) = vertice_griglia_5_by_5(1);
+        for i = 1:n-1
+           if(mod(i,5) == 0)
+               s(i+1,1) = s(i,1)+1;
+               s(i+1,2) = vertice_griglia_5_by_5(2);
+           else 
+               s(i+1,1) = s(i,1);
+               s(i+1,2) = s(i,2)+1;
+           end
+        
+        end
+    end
 end

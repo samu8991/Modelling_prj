@@ -1,0 +1,18 @@
+It will be created a scrpt for each metrics required by the project assignement.
+All these scripts will evaluate data coming from the main script which implements all
+the algorithms. In the following section there will be an explanation of the nomenclature
+of all the scripts and variables saved:
+
+
+#################################### O-DIST METRICS ###########################################
+1. Run the DIST.m script 
+2. Choose the deployment type
+3. After the script run there will be saved same .mat variables with the following names:
+    metrics_a_1.mat
+    metrics_a_2.mat
+4. Run the script metrics_a.m 
+All the metrics scripts have the following type of name metrics_[a|b|c]_[1|2]
+where a,b,c,1,2 depends on letters used in the assignement.
+#################################### IST-DIST METRICS ########################################
+
+
