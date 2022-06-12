@@ -6,26 +6,18 @@ arguments
     threshold = 1e-2 % one percent
 end
 
-times = zeros(N, 1);
+vector = zeros(N,2);
 
 for i = 1:N
     a = strcat('y', int2str(i));
-    times(i) = metric_CtSi(out, a, threshold);
+    vector(i,2) = metric_CtSi(out, a, threshold);
+    vector(i,1) = i;
 end
 
-times_ordered = sort(times);
+vector = sortrows(vector, 'descend');
 
-vector = zeros(N,1);
-for i = 1:length(times_ordered)
-    j = 1;
-    while times(j) ~= times_ordered(i)
-        j = j+1;
-    end
-    vector(i) = j;
-end
-
-if display_times
-    vector = [vector, times_ordered];
+if ~display_times
+    vector = vector(:,1);
 end
 
 end
