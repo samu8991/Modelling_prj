@@ -1,23 +1,24 @@
 %% Modelling project
-%clear 
+clear 
 close all
 clc
 %% Dati
-n = 25;
-l = 10;
-p = l^2;
-r = 8;
-sigma = 0.5;
-P_t = 25;
+n = 25; % number of sensors
+l = 10; % lenght of each side of the square room
+p = l^2; % total number of cells (each 1m^2)
+r = 8; % Radius for sensor communication
+sigma = 0.5; % ??
+P_t = 25; % ??
 
-%% Deployment di tipo a
+%% Deployment di tipo a - Random deployment
 seed = 12;
 
-R = [1 10];
-s = rand(n,2)*range(R) + min(R); 
-A = init_A(s,n,p,P_t,sigma);
+R = [1 10]; % Range for coordinates
+s = deploy(n, l, r, 1); %% Coordinate generation for the n sensors
+A = init_A(s,n,p,P_t,sigma); %% 
 mu = mutual_coherence(A);
-ret = 0.5*(1+1/mu);
+ret = 0.5*(1+1/mu); % sparsity of the solution
+fprintf("The sparsity K will be less than %f\n", ret);
  
 %% Creazione di Q
 % Computation of d_in due to the fact that eps must be included between 0

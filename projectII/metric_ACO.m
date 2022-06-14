@@ -14,7 +14,7 @@ for i = 1:N
     vector(i,1) = i;
 end
 
-vector = sortrows(vector, 'descend');
+vector = sortrows(vector, 2, 'ascend');
 
 if ~display_times
     vector = vector(:,1);

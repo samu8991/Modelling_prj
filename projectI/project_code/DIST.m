@@ -13,12 +13,12 @@ raggio = 1;
 no_tests = 1;
 %% User
 caso = menu('Choose algorithm you want to test','DIST','O-DIST');       
-deployment_type = menu('Choose ','a','b');
+deployment_type = menu('Choose deployment type','a (random deployment)','b (grid positioning)');
 %% Test
 every_no_iterations = zeros(1,no_tests);
 for k = 1:no_tests
     [target,x_i,y_i,s] = dist_alg(n,l,p,r,sigma,P_t,raggio,caso,deployment_type);
-    %plot_result(k,l,target,[x_i,y_i],s)
+    plot_result(k,l,target,[x_i,y_i],s)
 end
 %% Functions
 function [target,x_i,y_i,s] = dist_alg(n,l,p,r,sigma,P_t,raggio,caso,deployment_type)
@@ -68,13 +68,15 @@ function [target,x_i,y_i,s] = dist_alg(n,l,p,r,sigma,P_t,raggio,caso,deployment_
     metrics_a_1 = zeros(o_dist_time,T_max);
     metrics_a_2 = zeros(1,o_dist_time);
     metrics_b = zeros(1,o_dist_time);
+    if caso == 1 % Posiziono il target in una posizione random
+        target = [1+ 9*rand(), 1+9*rand()];
+    end
     for k = 1:o_dist_time
-        x = zeros(n,p);
-        if caso == 1
-            target = [1+ 9*rand(), 1+9*rand()];
-        else
-            target = [k,k];
+        if caso == 2 %% Posiziono il target sulla diagonale e lo sposto ad ogni ciclo
+             target = [k,k];
         end
+        x = zeros(n,p);
+       
         y = zeros(n,1);
         for i = 1:n
             d = norm(target-s(i,:));
@@ -160,29 +162,6 @@ function plot_result(k,l,target,estimate,s)
     legend('estimate','target','sensors','')
 end
 
-function ret = RSS(d,P_t,sigma)
-    eta = randn(1)*sigma;
-    if d > 8
-        ret = P_t - 58.5 - 33 *log10(d)+ eta;
-    else
-        ret = P_t - 40.2 - 20*log10(d)+ eta;
-    end
-end
-
-function A = init_A(s,n,p,P_t,sigma)
-    A = zeros(n,p);
-    l = 10;
-
-    for k = 1:p % Per ogni cella
-        t = [ floor(k/l), mod(k,l) ]; % posiziono il target
-        for kk = 1:n % per ogni sensore
-            d = norm(s(kk,:)-t(1,:))+0.1; % calcolo la distanza dal sensore del target
-            A(kk, k) = RSS(d, P_t, sigma); % e la RSS di quel sensore per quella posizione del target
-            assert(A(kk,k) ~= inf)
-        end
-    end
-end
-
 function Q = init_Q(s,r,n,eps)
     Q = eps * ones(n);
     for i = 1:n-1
@@ -211,56 +190,6 @@ function r = DIST_step(current, x_bar, x_0, y, A)
             r(i) = 0;
         else
             r(i) = r(i) - sign(r(i))*lambda; 
-        end
-    end
-end
-function ret = overlapped_sensors(s,raggio)
-    ret = 0;    
-    for i = 1:length(s)-1
-        for j = i+1 : length(s)
-            if(norm(s(i,:)-s(j,:)) < raggio)
-                ret = 1;
-                break;
-            end
-        end
-    end    
-end
-function s = deploy(n,l,raggio,deployment_type)
-    s = zeros(n,2);
-    if deployment_type == 1
-        %% Deployment di tipo a
-        cont = true;
-        while cont 
-            s = rand(n,2)*(l-1)+ 1; 
-            var = ~overlapped_sensors(s,raggio);
-            if var
-                cont = false;
-            end
-        end
-    elseif deployment_type == 2
-        %% Deployment di tipo b
-%         verified = false;
-%         vertice_griglia_5_by_5 = zeros(1,2);
-%         while ~verified
-%             vertice_griglia_5_by_5 = randi([1,10],[1,2]);
-%             if vertice_griglia_5_by_5(1) + 5 <= 10 && vertice_griglia_5_by_5(2) + 5 <= 10
-%                 verified = true;
-%             end
-%         end
-        vertice_griglia_5_by_5 = [3,4];
-        s = zeros(n,2);
-        
-        s(1,2) = vertice_griglia_5_by_5(2);
-        s(1,1) = vertice_griglia_5_by_5(1);
-        for i = 1:n-1
-           if(mod(i,5) == 0)
-               s(i+1,1) = s(i,1)+1;
-               s(i+1,2) = vertice_griglia_5_by_5(2);
-           else 
-               s(i+1,1) = s(i,1);
-               s(i+1,2) = s(i,2)+1;
-           end
-        
         end
     end
 end

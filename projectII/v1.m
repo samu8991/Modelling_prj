@@ -42,16 +42,16 @@ end
 
 %% Graph definition
 N = 6;
-% adj_mtx = [0 0 0 0 0 0
-%            1 0 0 0 0 0
-%            0 1 0 0 0 0
-%            0 0 1 0 0 0
-%            0 0 0 1 0 0
-%            0 0 0 0 1 0];
-adj_mtx = ones(N) - eye(N);
-% png_vct = zeros(N, 1); % pinning vector
-% png_vct(1) = 1;
-png_vct = ones(N,1);
+adj_mtx = [0 0 0 0 0 0
+           1 0 0 0 0 0
+           0 1 0 0 0 0
+           0 0 1 0 0 0
+           0 0 0 1 0 0
+           0 0 0 0 1 0];
+% adj_mtx = ones(N) - eye(N);
+png_vct = zeros(N, 1); % pinning vector
+png_vct(1) = 1;
+% png_vct = ones(N,1);
 png_mtx = diag(png_vct); % pinning matrix
 
 %% Simulink configuration

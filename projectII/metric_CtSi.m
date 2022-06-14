@@ -9,7 +9,7 @@ y0 = out.y0;
 y = out.find(agent);
 
 err = y0.data - y.data;
-logicErr = err <= threshold;
+logicErr = abs(err) <= threshold;
 
 i=0;
 while logicErr(end-i) == 1

@@ -13,7 +13,7 @@ fig = gcf;
 fig.Position(3:4)=[1000,600];
 hold on
 for k = 1:length(metrics_a_1(:,1))
-    plot(metrics_a_1(k,:),'LineWidth',1.5)
+    plot(metrics_a_1(k,:), '*','LineWidth',1.5)
 end
 grid on
 title('$|\!|\boldmath{\bf{\bar{x}}}(t)-\!\boldmath{\bf{\tilde{x}}}(t)|\!|_2,\forall t = 1,...,T$', 'interpreter', 'latex')
