@@ -7,11 +7,11 @@ function [sr, d, cumd] = metric_success_rate(data, options)
 % the error for each time instant (d) and the cumulative error for each 
 % time instant (cumd) 
 arguments
+    data
     options.display bool = false; % whether to display d and cumd or not
 end
 
-
-r = 0;
+sr = 0;
 d = 0;
 cumd = 0;
 end

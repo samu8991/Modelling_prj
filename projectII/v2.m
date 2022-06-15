@@ -20,7 +20,7 @@ switch(signal_reference)
     case 2
         poles = [0 0]; % ramp
     case 3
-        w = 100;
+        w = 101;
         poles = [w*1i -w*1i]; % sinewave
 end
 
@@ -91,11 +91,11 @@ x = zpk(minreal(x, 1e-3));
 
 %% Agents observer
 % Same Q and R
-P = are(A_plant, C'*C/R, Q);
+P = are(A_plant, C'*C/R, Q); %% simone.pirrera@polito.it
 F = P * C' / R;
 
 %% Simulation
-time = 30;
+time = 50;
 out = sim('model');
 
 %% Plots

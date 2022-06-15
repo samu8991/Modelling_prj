@@ -1,4 +1,5 @@
-test_n = 50;
+%test_n = 50;
+test_n = 1;
 test_err = zeros(test_n,1);
 
 rng(12);
