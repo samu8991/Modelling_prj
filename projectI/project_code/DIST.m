@@ -11,7 +11,7 @@ arguments
     options.qEps = .5; % percentage of the value for eps in the range [0 1/max(d_in)]
     options.m {mustBePositive} = 1; % measurements for each sensor
 end
-rng(seed);
+rng(seed); % For repeatability (target and sensor positioning)
 m = options.m;
 
 %% Dati
@@ -65,7 +65,7 @@ for i = 1:n % for each sensor
         y( (i-1)*m + m_i ) = RSS(d, P_t, sigma);
     end
 end
-B=A; z=y;
+%B=A; z=y;
 [B, z] = feng(A,y); % Feng's theorem
 muB = mutual_coherence(B);
 kB = 0.5*(1+1/muB); % sparsity of the solution

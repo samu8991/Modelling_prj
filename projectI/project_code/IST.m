@@ -9,11 +9,10 @@ arguments
     seed {mustBeNonnegative} = 0; % for repeatability (affects the deployment 2 and automatic target positionining)
     options.qWeightsType = 0; % means we are going to get uniform weights
     options.qEps = .5; % percentage of the value for eps in the range [0 1/max(d_in)]
+    options.m {mustBePositive} = 1; % measurements for each sensor
 end
-%% Settings
 rng(seed); % For repeatability (target and sensor positioning)
-% deployment_type = 2; % 1 for random, w for grid
-% T_max = 1e7; % maximum time for the algorithm to ru
+m = options.m;
 
 %% Dati
 n = 25; % number of sensors
@@ -26,11 +25,18 @@ P_t = 25; % For RSS computation
 %% Deployment
 s = deploy(n, l, r, deployment_type); %% Coordinate generation for the n sensors
 
+%% Target positioning
+if sum(size(target)) == 2
+    target = unifrnd(0, l, 2, 1);
+end
+
 %% Training
-A = init_A(s, n, p, P_t, sigma, [.5, .5]); %% Training phase
-mu = mutual_coherence(A);
-ret = 0.5*(1+1/mu); % sparsity of the solution
-%fprintf("The sparsity K will be less than %f\n", ret);
+A = init_A(s, n, p, P_t, sigma, [.5, .5], m); %% Training phase
+muA = mutual_coherence(A);
+kA = 0.5*(1+1/muA); % sparsity of the solution
+if showPlots
+    fprintf("The sparsity K will be less than %7.5f (coherence: %5.4f)\n", kA, muA);
+end
  
 %% Creazione di Q
 % Computation of d_in due to the fact that eps must be included between 0
@@ -41,16 +47,11 @@ assert(ones(1,n) * d_in >= n); %% Parameters are wrong!!!
 R = [0,1/max(d_in)];
 eps = options.qEps * range(R)+ min(R);
 Q = init_Q(s,r,n,eps);
-% G=digraph(Q);
-% plot(G);
 
 %% Runtime
 x = zeros(p,T_max); % target estimation
 if sum(size(target)) ~= 2
     x(:,1) = x0; % Initial conditions
-end
-if sum(size(target)) == 2
-    target = unifrnd(0, l, 2, 1); % target positioning
 end
 
 % measurements
@@ -60,6 +61,11 @@ for i = 1:n
     y(i) = RSS(d, P_t, sigma);
 end
 [B, z] = feng(A, y); % Feng's theorem
+muB = mutual_coherence(B);
+kB = 0.5*(1+1/muB); % sparsity of the solution
+if showPlots
+    fprintf("The sparsity K will be less than %7.5f (coherence: %5.4f)\n", kB, muB);
+end
 
 % IST algorithm
 x(:,1) = zeros(p,1);
