@@ -1,4 +1,11 @@
-function s = deploy(n, l, raggio, deployment_type)
+function s = deploy(n, l, raggio, deployment_type, bottom_left_vertex)
+arguments    
+    n %numero di agenti
+    l % lato del quadrato
+    raggio % raggio di comunicazione
+    deployment_type % 1 per il deployment casuale, 2 per quello a griglia
+    bottom_left_vertex = [0.5,0.5];
+end
     s = zeros(n,2);
     if deployment_type == 1
         %% Deployment di tipo a
@@ -16,7 +23,6 @@ function s = deploy(n, l, raggio, deployment_type)
         end
     elseif deployment_type == 2
         %% Deployment di tipo b
-        bottom_left_vertex = [0.5,0.5];
         spacing = [ (l-2*bottom_left_vertex(1))/(sqrt(n)-1)
                     (l-2*bottom_left_vertex(2))/(sqrt(n)-1) ];
                 
@@ -33,7 +39,7 @@ function s = deploy(n, l, raggio, deployment_type)
         s(1,1) = bottom_left_vertex(1);
         s(1,2) = bottom_left_vertex(2);
         for i = 1:n-1
-           if(mod(i,5) == 0)
+           if(mod(i,sqrt(n)) == 0)
                s(i+1,1) = s(i,1)+spacing(1);
                s(i+1,2) = bottom_left_vertex(2);
            else 
