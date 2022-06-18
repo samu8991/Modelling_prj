@@ -9,11 +9,13 @@ This project has three main purposes, each one specified by an experiment.
 ---
 
 The most important files in this directory are:
+
 1. experiment_a.m
 2. experiment_b.m
 3. experiment_c.m
 
 which are heavily based on another three important files:
+
 4. IST.m
 5. DIST.m 
 6. ODIST.m
