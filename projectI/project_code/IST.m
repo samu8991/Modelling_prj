@@ -50,7 +50,7 @@ Q = init_Q(s,r,n,eps);
 
 %% Runtime
 x = zeros(p,T_max); % target estimation
-if sum(size(target)) ~= 2
+if sum(size(x0)) ~= 2
     x(:,1) = x0; % Initial conditions
 end
 
@@ -68,7 +68,6 @@ if showPlots
 end
 
 % IST algorithm
-x(:,1) = zeros(p,1);
 for t = 2:T_max
     x(:,t) = IST_step(x(:,t-1),z,B); % defined later in this file
     
@@ -96,22 +95,22 @@ Q; % graph stocastich matrix -> size: [n, n]
 target; % target position in (x,y) coordinates -> size: [2 1]
 %% plots
 if showPlots
+    showRoom;
+    xLast = x(:,t);
+    [~, c] = max(xLast);
+    cell2pos(c, 10, true);
+    pos2cell(target(1), target(2), true, l);
+    plotAgents(s);
+    generateLegend(3, ["db","sg","*r"], ["best estimate", "target", "sensors"]);
+
+    
     figure
     plot(x_diff);
     m = min(x_diff);
     if m == 0
         m = 1e-6;
     end
-    ylim([0 1e2*m]);
-
-    showRoom;
-    plotAgents(s);
-    
-    xLast = x(:,t);
-    [~, c] = max(xLast);
-    cell2pos(c, 10, true, false);
-    pos2cell(target(1), target(2), true, l);
-
+    ylim([-stopThreshold stopThreshold]);
 
     figure
     stem(xLast);

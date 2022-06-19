@@ -7,11 +7,7 @@ clear all
 clc
 
 %% Parameters setup
-T_max = 1e5;
-stopThreshold = 1e-5;
-x0 = 0; % always zero initial state 
 showPlots = false; % we don't need the plot for each iteration
-seed = 0; % for repeatability of random deployment and target positioning
 
 n = 25;
 p = 100;
@@ -42,24 +38,28 @@ xlabel("\epsilon");
 % be 
 n_experiments = 100;
 
+T_max = 1e5;
+stopThreshold = 1e-5; 
+x0 = 0;
+deployment = 1; % random
 t = zeros(n_experiments, 1);
-acc = zeros(n_experiments, 1);
-m = 0.01;
+err = zeros(n_experiments, 1);
+m = 0.2;
 epsRange = linspace(m, 1-m, n_experiments);
 esrQ = zeros(n_experiments, 1);
-target = 0; % Automatic target positioning for the first run
-seed = 0; %In order to generate the same graph each time
+target = [5.5 5.5]; % Automatic target positioning for the first run
+seed = 6; %In order to generate the same graph each time
 
 for i = 1:n_experiments
-    [x, target, ~, ~,  t(i), ~, Q] = DIST(T_max, stopThreshold, x0, target, 2, showPlots, seed, "qEps", epsRange(i) );
+    [x, target, ~, ~,  t(i), ~, Q] = DIST(T_max, stopThreshold, x0, target, deployment, showPlots, seed, "qEps", epsRange(i) );
     [~, bestI] = max(x);
     p = cell2pos(bestI);
     lambdas = sort(eig(Q));
     esrQ(i) = lambdas(2);
     
-    acc(i) = vecnorm(p'-target, 2);
-    %                   real target     best estimate   accuracy                convergence time 
-    fprintf("Cycle %3d (t:[%4.1f,%4.1f] e:[%4.1f,%4.1f] acc:%3.1f) - esr: %8.3f time: %6d\n", i, target(1), target(2), p(1), p(2), acc(i), lambdas(2), t(i));
+    err(i) = vecnorm(p-target, 2);
+    %                   real target     best estimate   error                convergence time 
+    fprintf("Cycle %3d (t:[%4.1f,%4.1f] e:[%4.1f,%4.1f] err:%3.1f) - esr: %8.3f time: %6d\n", i, target(1), target(2), p(1), p(2), err(i), lambdas(2), t(i));
 end
 
 %% Plots

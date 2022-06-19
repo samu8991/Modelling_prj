@@ -1,19 +1,20 @@
-function s = deploy(n, l, raggio, deployment_type, bottom_left_vertex)
+function s = deploy(n, l, raggio, deployment_type, bottom_left_vertex, min_radius)
 arguments    
     n %numero di agenti
     l % lato del quadrato
     raggio % raggio di comunicazione
     deployment_type % 1 per il deployment casuale, 2 per quello a griglia
     bottom_left_vertex = [0.5,0.5];
+    min_radius = 1; % minimum radius for the sensors in order not to generate redundancy
 end
     s = zeros(n,2);
     if deployment_type == 1
-        %% Deployment di tipo a
+       %% Deployment di tipo a
        cont = true;
         s = unifrnd(0, 10, n, 2); % First generation
         while cont
            cont = false;
-           ok = compute_ok(s, raggio); % defined later in this file
+           ok = compute_ok(s, raggio, min_radius); % defined later in this file
            for i = 1:n
                if ok(i) == false
                    s(i,:) = unifrnd(0, 10);
@@ -50,7 +51,7 @@ end
     end
 end
 
-function ok = compute_ok(s, radius)
+function ok = compute_ok(s, radius, min_radius)
     % Assuming the first element is correctly positioned, i loop through
     % all the nodes to find its neighbors and the neighbors of the
     % neighbors. At the end, the ok vector will have true if the nodes
@@ -64,7 +65,7 @@ function ok = compute_ok(s, radius)
        ok(active_index) = true;
        for i=1:n % iterate over the nodes
            d = norm(s(active_index,:) - s(i,:), 2);
-           if d < radius && ok(i) == false % to find neighbors of the active
+           if d < radius && d > min_radius && ok(i) == false % to find neighbors of the active
                ok(i) = true; % if i is neighbor of active, i push it into the check_list
                check_list(length(check_list)+1) = i; % push
            end

@@ -50,7 +50,7 @@ Q = init_Q(s, r, n, eps); % stochastic graph matrix
 
 %% Runtime DIST
 x = zeros(n,p); 
-if sum(size(target)) ~= 2
+if sum(size(x0)) ~= 2
     x = x0' .* ones(n,p);
 end
 
@@ -142,15 +142,6 @@ if showPlots
         plot(x_diff(i,:));
     end
     ylim([-stopThreshold stopThreshold]);
-    xlim([t-t*.1, t]);
-
-    % x_diff plots
-    figure
-    hold on
-    for i=1:n
-        plot(abs(x_diff(i,:)))
-    end
-    ylim([-stopThreshold stopThreshold])
     xlim([t-t*.1, t]);
 
     % probability vector

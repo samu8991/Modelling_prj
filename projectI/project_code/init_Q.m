@@ -4,7 +4,7 @@ arguments
    r % radius for the agents to communicate
    n % number of agents
    eps % uniform weights value
-   wt = 0% Q type
+   wt = 0 % Q type
 end
     switch wt
         case 0
