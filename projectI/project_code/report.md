@@ -1,6 +1,6 @@
 # Title
 ### A project of target localization and tracking 
-### Antonio Minonne, Anna Paola Musio, Samuele Paone, Salvatore Pappalardo 
+> Antonio Minonne, Anna Paola Musio, Samuele Paone, Salvatore Pappalardo 
 
 ## Introduction 
 Software per utilizzare markdown -> https://obsidian.md/
