@@ -5,7 +5,7 @@ arguments
     p, % number of cells
     P_t, % transmission power
     sigma, % noise variance for RSS
-    offset = [0, 0] % ofsset for the cell to measure
+    offset = [0.5, 0.5] % offset for the cell to measure
     m {mustBePositive} = 1; % numbers of measurements per cell
 end
     A = zeros(n*m,p);

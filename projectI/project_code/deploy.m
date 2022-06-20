@@ -17,7 +17,7 @@ end
            ok = compute_ok(s, raggio, min_radius); % defined later in this file
            for i = 1:n
                if ok(i) == false
-                   s(i,:) = unifrnd(0, 10);
+                   s(i,:) = unifrnd(0, 10, 1, 2);
                    cont = true;
                end
            end
@@ -59,13 +59,24 @@ function ok = compute_ok(s, radius, min_radius)
     n = length(s);
     ok = zeros(n,1);
     check_list = [1]; % FIFO list
+    
+    too_near = zeros(n,1);
+    for i=1:n-1
+        for j=i+1:n
+            d = norm(s(i,:) - s(j,:), 2);
+            if d < min_radius
+                too_near(j) = true;
+            end
+        end
+    end         
+    
     while length(check_list) >= 1
        active_index = check_list(1); % get the current item
        check_list = check_list(2:end); % pop
        ok(active_index) = true;
        for i=1:n % iterate over the nodes
            d = norm(s(active_index,:) - s(i,:), 2);
-           if d < radius && d > min_radius && ok(i) == false % to find neighbors of the active
+           if d < radius && too_near(i) == false && ok(i) == false % to find neighbors of the active
                ok(i) = true; % if i is neighbor of active, i push it into the check_list
                check_list(length(check_list)+1) = i; % push
            end
