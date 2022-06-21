@@ -116,8 +116,9 @@ for i=1:n  %p_i is the pos2cell of the best component of the vector x_i
 end
 p_bar = p_bar / n;
 
-x = x(1,:); % Best estimate index array - we assume convergence happened
+x = mean(x,1); % Best estimate index array - we assume convergence happened
             % -> size: [1, p]
+            % -> media sulla prima dimensione
             
 target; % target position in (x,y) coordinates -> size: [2 1]
 %% plots

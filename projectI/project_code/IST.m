@@ -122,7 +122,7 @@ end
 %% Helper function
 function r = IST_step(x_0,y,A)
     lambda = 1e-4;
-    tau = 0.7;
+    tau = .7;
     r = x_0 + tau*A'*(y-A*x_0);
     assert(length(r) == 100);
     for i = 1:length(r)
