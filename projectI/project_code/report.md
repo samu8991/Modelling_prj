@@ -1,3 +1,4 @@
+```toc style: bullet | number | inline (default: bullet) min_depth: number (default: 2) max_depth: number (default: 6) title: string (default: undefined) allow_inconsistent_headings: boolean (default: false) delimiter: string (default: |) varied_style: boolean (default: false) ```
 # Title
 ### A project of target localization and tracking 
 > Antonio Minonne, Anna Paola Musio, Samuele Paone, Salvatore Pappalardo 
@@ -79,11 +80,40 @@ descrption
 The objective of this experiment is to verify the relationship between the essential spectral radius of the matrix Q and the convergence time of the system.
 The setup for this experiment is the following:
 
-- random sensor positions
-- 30 rounds for each sensor deployment with varying essential spectral radius manipulating $\epsilon$ between 0.2 and 0.8 the maximum permitted value
-- 
+- random sensor deployment,
+- fixed target at the center of the room,
+- 30 rounds for each sensor deployment with varying essential spectral radius manipulating $\epsilon$ between 20% and 80% the maximum permitted value, 
+- maximum time set to 1e5 cycles,
+- early stopping if the 2-norm of the  $\overline{x}$ gets below 1e-6, where $\overline{x}$ represents the average value of the state `x` over each sensor ($\overline{x} = \sum_{i=1}^n{x_i}$).
+
+A total of 60 different sensor deployment were run. For each run, a total of 30 points were evaluated, each point corresponding to a different value of the essential spectral radius.
+
 #### Results
+Analyzing the result of this experiment wans't simple. Each run produced a completely different outcome which wasn't simple to generalize. To address this problem, as explained above, we decided to run 60 different experiments each with 30 different eigenvalues. 
 
+The nex step was to analyze the obtained data as a whole and since there were no two equal eigenvalues we adopted the following procedure:
+- firstly, we computed a _class of eignevalues_, i.e. we grouped them using a similarity criterion. In order to do that, we used the matlab function `unique_tol`. Two values `u` and `v`, based on the matlab reference, are whithin `tolerance` if `abs(u-v) <= tolerance * max(vector)` where `vector` represents correspond to the values we want to group toghether. 
+- The above step generated some _buckets_, bounds we could use to group times.
+- The second step was to group the times based on the same criterion, so all the time values corresponding to an essential spectral radius class were averaged togheter. For performing this step, given the variety of the convergence times (between a minimum of 3000 cycles up to 10000) it was necessary to normlize them in such a way that for each specific sensor deployment the times would range between 0 and 1.
 
-## Extensions (Se ne facciamo)
-etc...
+This process was repeated three times with three different relative tolerance values. In the figure the three results are shown.
+![[experiment_c.png]]
+Furthermore, the green line represents the linear regression of the curve in yellow, which is the one computed with a relative tolerance of 10e-2.
+The linear regressions have a negative angular coefficient, even though small (-0.044), which describes the tendancy of the algorithm to faster converge given a higher essential spectral radius.
+
+## Extensions
+In this section we shall present some extra implementations we made. No formal experiment was run, but a couple of interesting observations came out.
+### More measurements (m>1)
+The first thing we tried to do was to make the sensors measure more than one time. A good way to generate a better dictionary might consist in mooving the target around inside the cell for the sensors to pick up a slightly different measurement for the specific cell. This was not done since in the simulation there was added noise. The noise guarantee different measures for each time instant. 
+An argument one might do is as following: if the noise is too small, there is no added information in doing a second measurement, or at least is very small, so moving the target around inside the cell might increase the gathered informations needed for the target localization.
+### More targets (k > 1)
+Another interesting fact was how the value of k changed when adding sensors or measurements. We noted that k could reach dramatically high values. This only happened, thought, applying Feng's theorem which is a great tool in this context. The only problem was that, at some point, if we only added measurements, some informations were lost applying the theorem. That's due to the fact that the matrix A stopped to being full matrix when m was too big.
+### More sensors (n>25)
+For using more sensors, as explained in the previous paragraphs, we needed to disable Feng's theorem. This way we were able to localize the target in a pretty much perfect way. With 100 sensors, each performing 20 measurements, the results were stunning. Surely, it is not that practical to have one sensor per cell in real life.
+Another important point was the sensibility of the algorithm to the $\tau$ parameter. In order for the system to not diverge or go to zero, we needed to carefully change its value until we found the sweet spot for the given configuration.
+The next table shows three parameter for different configurations.
+
+|                    Configuration                  |       $\tau$      |
+|      Using Feng, n = 25, 1<=m<=4     |      .7      |
+| Not using Feng, 25<=n<=50, m=20 | .378e-6 | 
+|      Not using Feng, n=100, m=25      |    1e-7    |
