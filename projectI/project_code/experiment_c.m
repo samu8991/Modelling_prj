@@ -120,11 +120,14 @@ for i = 1:length(times)
 end
 
 %% Best method
-esrQ_best = uniquetol(esrQ, 1e-2);
+for tol = [1e-2 5e-2 10e-2]
+%tol = 5e-2;
+esrQ_best = uniquetol(esrQ, tol);
 buckets = [esrQ_best; inf];
 times_best = zeros(length(esrQ_best), 1);
 tot_el = 0;
 t = zeros(numel(esrQ), 1);
+tot_el = 0;
 for i = 1:length(times_best)
    lastT = 0;
    for j = 1:numel(esrQ)
@@ -138,19 +141,54 @@ for i = 1:length(times_best)
 end
 assert(tot_el == numel(times));
 
-plot(esrQ_best, times_best);
-legend("approximated best");
-fitted = fit(esrQ_best, times_best, 'poly1');
 hold on
-plot(fitted);
+plot(esrQ_best, times_best, "LineWidth", [55.5556 21.6667 0.2778] * [tol^2 tol 1]', "DisplayName", sprintf("relative tollerance %.2f", tol));
+
+    if tol == 5e-2
+        esrQ_fitting = esrQ_best;
+        times_fitting = times_best;
+    end
+end
+
+legend;
+xlim([0 1]);
+
+%% Fit
+hold on
+fitted = fit(esrQ_fitting, times_fitting, 'poly1');
+plot(fitted, "g--");
 xlabel("Essential spectral radius");
 ylabel("Normalized time");
 
-
 %% statistics
+% Success rate and average error considering the esr.
+tol = 5e-2;
+esrQ_best = uniquetol(esrQ, tol);
+buckets = [esrQ_best ; inf];
+avg_err = zeros(length(esrQ_best),1);
+t = zeros(numel(esrQ));
+for i = 1:length(avg_err)
+   lastT = 0;
+   for j = 1:numel(esrQ)
+       if esrQ(j) < buckets(i+1) && esrQ(j) >= buckets(i) % as specified by uniquetol
+            lastT = lastT+1;
+            t(lastT) = err(j);
+       end
+   end
+   tot_el = tot_el + lastT;
+   avg_err(i) = mean(t(1:lastT)); 
+end
+
+figure
+plot(avg_err, times_fitting)
+return 
+
+%% 
+
 average_errors = zeros(length(seeds), 1);
 for i = 1:length(err(:,1))
     average_errors(i) = mean( err(i,:) );
     success_rate(i) = sum(err(i,:) == 0) / n_points_per_seed;
     fprintf("sr %4.2f, err_avg: %5.2f\n", success_rate(i), average_errors(i));
 end
+
