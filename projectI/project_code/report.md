@@ -3,7 +3,8 @@
 > Antonio Minonne, Anna Paola Musio, Samuele Paone, Salvatore Pappalardo 
 
 ## Introduction 
-Software per utilizzare markdown -> https://obsidian.md/
+This project work is about simulating an indoor localization and tracking system through a wireless sensor network (WSN) in both centralize and distributed way; moreover we considered sensors deployment in a randomized and fixed grid cases. 
+After implementing all the necessary code for the simulations, we performed a series of tests in order to compare the algorithms and evaluate their own performance.
 
 
 ## Code explantion 
@@ -14,7 +15,7 @@ There are three categories of files:
 We shall explain each file within each category.
 
 ### Experiments files
-These are the most important files. They containts the code used for generating data and analyze it.  The detailes of the experiments are discussed in the "Result and Analysis" section.
+These are the most important files. They contain the code used for generating data and analyze it.  The detailes of the experiments are discussed in the "Result and Analysis" section.
 ### Algorihtms implementations files
 There are 3 files: IST.m, DIST.m and ODIST.m each of which is exactly what it sounds like. They are implemented as functions, as everything in this project but the experiments, for ease to use.
 #### IST
@@ -38,7 +39,7 @@ The DIST algorithm is implemented pretty much as the IST one. We shall describe 
 
 4. Q computation: it is made through the `init_Q` helper function, but this time is very useful, since its informations will be used for applying the Distribute Iterative Soft Thresholding. A sidenote is that `eps` is a number in the range \[0, 1\] which correspond to the percentage for the actual $\epsilon$ in the Q matrix (using uniform weights). Specifically is the percentage between 0 and the maximum $\epsilon$ permitted, which is $\frac{1}{max(d_i)}$ where $d_i$ is the in-degree of the i-th sensor.
 
-9. DIST algorithm: during this cycle, the DIST algorithm is applied to each `x` of each sensor. In this code there are checks over the values of x. These were added when trying  to aplly the algorithm with more than one measurement per sensor or when the number of sensors is changed. The complete explanation is in the "Extensions" section. For each sensor is then computed the average state of the neighbors and the `DIST_step` function is called. When the difference of the 1-norm (or 2-norm) average of the vectors is below `stopThreshold` the algorithm stops. This is unfeasible in real-life, but it was implemented in this way in order to compare it with the DIST algorithm.
+9. DIST algorithm: during this cycle, the DIST algorithm is applied to each `x` of each sensor. In this code there are checks over the values of x. These were added when trying  to apply the algorithm with more than one measurement per sensor or when the number of sensors is changed. The complete explanation is in the "Extensions" section. For each sensor is then computed the average state of the neighbors and the `DIST_step` function is called. When the difference of the 1-norm (or 2-norm) average of the vectors is below `stopThreshold` the algorithm stops. This is unfeasible in real-life, but it was implemented in this way in order to compare it with the DIST algorithm.
 
 10. The big difference here is that x does not contain the full history of the x vector, but only the best estimate. Furhtermore, x_diff contains only the euclidean norm of `x` for each sensor for each time t. Finally, p_bar is computed as the average of the coordinates of all the best estimates.
 Exactly as `IST_step`, `DIST_step` computes the gradient descent with respect to the average state of the neighbors and then applies the soft thresholing operator.
@@ -55,7 +56,7 @@ We shall write a full list with the brief explanation of each file. Some custom 
 - get_in_degree - computes a vector in which each component is the in-degree of each row of the graph. The matrix Q has to be an adjacenct matrix for the graph in question.
 - getPath - generates predefined path given an input number. The path is a matrix that has 2 columns (x and y) and as many rows as points in the path.
 - init_A - coincide with the training step. It computes A given the sensors' positions
-- init_Q - computes a suitable wheighted matrix for the graph, given the sensors' positions. It uses uniform weights (to garantuee consensus) and checks whether the given $\epsilon$ belogs to the permitted interval.
+- init_Q - computes a suitable wheighted matrix for the graph, given the sensors' positions. It uses uniform weights (to garantee consensus) and checks whether the given $\epsilon$ belongs to the permitted interval.
 - plotAgents - plots the agents inside a room given the sensors' positions. It can display the radius of the sensors, can display the sensors with random colors and can display the sensors using their ID.
 - plotPath - uses arrow.m for plotting a path in the room
 - pos2cell - converts a position (x,y) to the corresponding cell index.
@@ -65,14 +66,57 @@ We shall write a full list with the brief explanation of each file. Some custom 
 
 intro - anche no
 
-### experiment A
+### Experiment A
 description
 
 #### Risultati
 
 ### Experiment B 
-descrption
-#### Risultati
+Experiment B is about comparing IST-DIST performances.
+
+### How to choose the right norm to compare the two algorithms?
+
+In order to set a stop criterion we need to measure the "distance" between predictions taken at *t* and *t-1* ,hence the question is which definition of distance?
+
+We took into consideration  l<sub>1</sub> norm, l<sub>2</sub> norm and the sum of all the states,  so basically we want to know which norm has the same order of magnitude for both the algorithms.
+
+The following figure shows how this three norms performed.
+
+![](C:\Users\AnnaPaola\Desktop\model\projectI\project_code\img\comparison_metrics.png)
+
+As notable from this figure, the most similar metrics we can use is the sum, but  we can't use it because it goes under 0. That's a great indication of
+
+"overshoot", meaning  that it goes over the minimum of the function and it is trying to get back which, for this specific instance, indicates a wrong setting 
+
+of lambda and tau. Due to this considerations we decided to use the l<sub>1</sub> norm.
+
+#### How many iterations are necessary on average?
+
+|                       | IST          | DIST         |
+| --------------------- | ------------ | ------------ |
+| Avg absolute error    | 4.345        | 4.442        |
+| Error variance        | 3.089        | 3.390        |
+| Success rate          | 0.000        | 0.000        |
+| Accuracy              | 0.340        | 0.310        |
+| Avg. convergence time | 1.728008e+04 | 3.640530e+03 |
+
+These are the outcomes obtained after testing the algorithms 100 times moreover we decided to take into consideration other key performance indicators; the following explains the indicators that might be more ambiguous:
+
+- avg absolute error is the euclidean distance between the real target position and the estimated one without taking into consideration the reference point
+
+- success rate is the ratio between the number of correct estimations and the total experiment number. In this case the definition of success is if the algorithms predict the cell in which the target really is.
+
+- accuracy is the ratio between the number of correct estimations and the total experiment number. For success we mean all the predictions that have a distance from the target under a certain threshold that we fixed at 3.5. We choose this value based on the variance and average.
+
+  ### Probability mass distribution
+
+  Aside from the requested metrics, we decided to plot also the error probability distribution. We created this plot first dividing the x-axis 10 homogeneous intervals inside this range [mu - delta mu+delta], the we count how many times the algorithms made an error inside each interval.
+
+  In this case we took the absolute error, meaning the euclidean distance between the target and the estimate.
+
+  ![](C:\Users\AnnaPaola\Desktop\model\projectI\project_code\img\prob_distr.png)
+
+As we can see the error probability distribution for each algorithm is gaussian and they are really similar meaning that the two algorithms perform almost the same error.
 
 ### Experiment C 
 
