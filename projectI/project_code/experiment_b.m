@@ -248,3 +248,17 @@ bar(bbb)
 
 %% save
 save("experiment_b", "-v7.3")
+
+%% 
+inter = linspace(0.5,8,11);
+vec_I = zeros(1,10);
+vec_D = zeros(1,10);
+for k=1:length(vec_I)
+    v_I = size(find(err_I < inter(k+1) & err_I > inter(k)));
+    vec_I(k) = v_I(1)/n_experiments;
+
+    v_D = size(find(err_D < inter(k+1) & err_D > inter(k)));
+    vec_D(k) = v_D(1)/n_experiments;
+end
+bbb = [vec_I', vec_D']
+bar(bbb);

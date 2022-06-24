@@ -1,3 +1,2 @@
-v1 - Has no observer, it is the same as hw3, but with the new system
-v2 - Implementing observer for the leader system and neighborhood observers for the agents. The caveat is that the system is controlled through the
-    observer in a different way.
+v1 - Chain graphs analisys
+v2 - Tree graphs analisys
