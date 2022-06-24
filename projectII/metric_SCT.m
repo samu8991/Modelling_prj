@@ -2,7 +2,7 @@ function t = metric_SCT(out, N, threshold)
 arguments
     out
     N = 6 % Number of agents
-    threshold = 1e-2 % one percent
+    threshold = 1e2 % one percent
 end
 
 t = 0;

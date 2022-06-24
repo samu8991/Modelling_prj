@@ -188,7 +188,7 @@ In thi section we now discuss the chosen network, in terms of cost and performan
 In order to perform these tests we choose the tree structure because we took in to consideration two factors: the structure generality and the feasibility in terms of applications domain , i.e. the mag-lev.
 The dictator and full-graph structure put us in a centralized-like context moreover trees don't have cycles  and, as said before, we found that this is a good property; hence, due to these considerations, we believe that trees are the most significant structure to analyze.  
 
-## Cambiando il segnale generato dal leader
+## Switching leader signal
 
 In this scenario we are going to perform some tests on a tree changing each time the reference value imposed by the leader node: step, ramp and sine wave and also changing the architecture so firstly with a neighborhood observer and secondly with a local observer; so that it is possible to appreciate the difference between them.
 
@@ -198,10 +198,10 @@ The outcomes of our tests, based on our metrics, are the following and they took
 
 #### 1.  System Convergence Time (SCT)
 
-| Step     | 15.000     |
+| Step     | 11.210     |
 | -------- | ---------- |
-| **Ramp** | **14.990** |
-| **Sine** | **14.990** |
+| **Ramp** | **11.504** |
+| **Sine** | **5.954**  |
 
 
 
@@ -216,18 +216,47 @@ The outcomes of our tests, based on our metrics, are the following and they took
 
 | Step     | 1     | 2     | 3     | 4     | 5     | 6     |
 | -------- | ----- | ----- | ----- | ----- | ----- | ----- |
-| **Ramp** | **1** | **2** | **3** | **4** | **5** | **6** |
-| **Sine** | **1** | **2** | **3** | **4** | **5** | **6** |
+| **Ramp** | **1** | **2** | **5** | **4** | **6** | **3** |
+| **Sine** | **3** | **4** | **5** | **6** | **1** | **2** |
 
 
 
 #### 4.  Global Disagreement Error (GDE)
 
+![](C:\Users\AnnaPaola\Desktop\model\projectII\img\GDE_tree.png)
+
 
 
 ### Distributed regulator based on local observers
 
+#### 1.  System Convergence Time (SCT)
 
+| Step     | 11.215     |
+| -------- | ---------- |
+| **Ramp** | **11.450** |
+| **Sine** | **5.954**  |
+
+
+
+#### 2. Complete Agents Convergence time (CACT)
+
+| Step     | 89.999     |
+| -------- | ---------- |
+| **Ramp** | **89.997** |
+| **Sine** | **89.994** |
+
+#### 3.  Agent Convergence Order (ACO)
+
+| Step     | 1     | 2     | 3     | 4     | 5     | 6     |
+| -------- | ----- | ----- | ----- | ----- | ----- | ----- |
+| **Ramp** | **1** | **2** | **3** | **4** | **5** | **6** |
+| **Sine** | **3** | **4** | **5** | **6** | **1** | **2** |
+
+
+
+#### 4.  Global Disagreement Error (GDE)
+
+![](C:\Users\AnnaPaola\Desktop\model\projectII\img\GDE_tree.png)
 
 ## Cambiando il rumore di misurazione
 ## Cambiando c, Q e R

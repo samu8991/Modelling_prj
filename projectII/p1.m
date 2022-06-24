@@ -44,7 +44,7 @@ for a=1:3
     
     %% Simulink variables
     
-    standard_model_variables("local_or_neighborhood_observer",2,"eps_on",1,"zeta_on",1);
+    standard_model_variables("local_or_neighborhood_observer",1,"eps_on",1,"zeta_on",2,"measurement_noise_type",0);
     
     %% Agents' Controller
     Q = diag([1 1]);

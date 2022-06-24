@@ -2,7 +2,7 @@ function vector = metric_ACO(out, display_times, threshold, N)
 arguments
     out
     display_times = false % whether to output also times
-    threshold = 1e-2 % one percent
+    threshold = 1e2 % one percent
     N = 6 % Number of agents
 end
 

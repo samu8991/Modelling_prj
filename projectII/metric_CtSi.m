@@ -2,7 +2,7 @@ function t = metric_CtSi(out, agent, threshold)
 arguments
     out
     agent
-    threshold = 1e-2 % one percent
+    threshold = 1e2 % one percent
 end
 
 y0 = out.y0;
