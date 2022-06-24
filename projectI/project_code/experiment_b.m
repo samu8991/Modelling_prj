@@ -213,19 +213,38 @@ for k=1:length(vec_I)
     vec_D(k) = v_D(1)/n_experiments;
 end
 figure
-bar(vec_I);
-hold on
-bar(vec_D);
-title('$Probability\hspace{0.2cm}Mass\hspace{0.2cm}distribution $','Interpreter','latex')
-legend('Ist','Dist')
+% bar(vec_I);
+% hold on
+% bar(vec_D);
+% title('$Probability\hspace{0.2cm}Mass\hspace{0.2cm}distribution $','Interpreter','latex')
+% legend('Ist','Dist')
+bbb = [vec_I',vec_D']
+bar(bbb)
+% %% Prova
+% % Create data
+% close all
+% bins = [inter(1) inter(2); 
+%     inter(2) inter(3);
+%     inter(4) inter(5);
+%     inter(6) inter(7);
+%     inter(8) inter(9);
+%     inter(9) inter(10);
+%     inter(10) inter(11)];
+% y = vec_I;
+% % Create bar plot
+% % The .5 specifies bin width, making room for labels
+% h = bar(y+.5); 
 % 
-% for k=1:length(vec)
-%     v = size(find(err_D < inter(k+1) & err_D >= inter(k)));
-%     vec(k) = v(1)/n_experiments;
-% end
-% figure
-% bar(vec);
-% title('$probability\hspace{0.2cm}Mass\hspace{0.2cm}distribution $','Interpreter','latex')
+% % Get bar centers and bar widths
+% xCnt = h.XData + h.XOffset; % XOffset is undocumented!
+% width =  h.BarWidth; 
+% % Get x-val of bar-edges
+% barEdgesX = xCnt + width.*[-.5;.5];
+% % Set new xtick and xticklabels, rotate by 90deg.
+% ax = h.Parent; % axis handle, if you don't have it already
+% ax.XTick = barEdgesX(:); 
+% ax.XTickLabel = string(reshape(bins',[],1)); 
+% ax.XTickLabelRotation = 90;
 
-
+%% save
 save("experiment_b", "-v7.3")
