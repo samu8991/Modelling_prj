@@ -165,6 +165,7 @@ This happens because each node receives always the same informations, even thoug
 Altough this is the most reliable structure (both in terms of performance and reliabilty) it also is the most expensive, needing to connect every node six times.
 
 ## Final considerations
+
 Summing up the conclusion we can say that if:
 
 1. the graph is acyclic and
@@ -173,7 +174,7 @@ Summing up the conclusion we can say that if:
 then the following relationship holds
 
 $$
-T_i \propto \frac{1}{\Omega_i}, \text{   where } \Omega_i = \sum_{j=1}^{d} \frac{1}{w_j}
+T_i \propto \Omega_i, \text{   where } \Omega_i = \sum_{j=1}^{d} \frac{1}{w_j}
 $$
 While, if the weights are all the same, tje convergence time only depends on the network topology.
 
@@ -245,6 +246,27 @@ The problem to conclude the proof was to find som kind of relationship between e
 To conlcude, we show the equations for each agent.
 $$
 \begin{cases}
-  
+		  \dot{x_i} = Ax_i + Bu_i \\
+		  u_i = cK \epsilon_i - K^\star \hat{x} \\
+		  \epsilon_i = g_i ( \hat{x_0} - \hat{x_i} ) + \sum_{j=1}^{N} a_{ij} (\hat{x_j} - \hat{x_i}) \\
+		  \dot{\hat{x_i}} = A \hat{x_i} + B u_i - cF \zeta_i \\
 \end{cases}
 $$
+
+Where 
+
+$$
+\begin{cases}
+		  \zeta_i = g_i ( \tilde{y_0} - \tilde{y_i} ) + \sum_{j=1}^{N} a_{ij} (\tilde{y_j} - \tilde{y_i}) \\
+		  \tilde{y_i} = y_i - \hat{y_i} \\
+		  y_i = Cx_i \\
+		  \hat{y_i} = C \hat{x_i}
+\end{cases}
+$$
+
+We analyzed such a system and computed the Synchronization Region. The following figure shows the synchronization region for the oberserved system $(A, C)$.
+
+![](img/observer_convergence.png)
+This plot shows us, under the conditions we designed the controller and the observer, the system converges.
+
+This is surely a particular case, but this new method assures the existance of some conditions on $A$ such that this architecture is stable.

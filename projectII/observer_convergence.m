@@ -8,10 +8,6 @@ B_plant = [0; -9.9453];
 C_plant = [708.27 0];
 D_plant = 0;
 
-%% Using unstable matrix
-K = acker(A_plant, B_plant, [0 0]);
-A_plant = A_plant - B_plant * K;
-
 %% Agents observer
 Q = diag([1 1]);
 R = 1;
@@ -47,6 +43,8 @@ for p = 1:ok
     plot(real(s), imag(s), 'b*');
 end
     
+xlabel("\alpha - Real part")
+ylabel("\beta - Imaginary part")
 
 
 %% Riccati equation
