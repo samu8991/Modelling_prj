@@ -11,3 +11,4 @@ CtSi -> Indicates the Convergence time for the Agent Si
 1. System Convergence Time (SCT) -> maximum between CtSi, where i=1..N;
 2. Complete Agents Convergence time (CACT) -> sum of CtSi, where i=1..N;
 3. Agent Convergence Crder (ACO) -> returns the agents in order of convergence time;
+4. Global Disagreement Error (GDE) -> returns y-y0 for each agent.

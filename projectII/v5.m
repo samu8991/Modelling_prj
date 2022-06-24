@@ -29,7 +29,7 @@ C = C_plant; % for the agent's observers
 
 %% Experiment begin
 
-type = "tree";
+type = "complete";
 %figure 
 n_experiments = generate_adj_mtx(type, -1);
 results = cell.empty(4,0);
@@ -102,4 +102,3 @@ for i = 1:n_experiments
     title(strcat("GDE - Confguration ", int2str(i)));
 end
 linkaxes(a, 'y');
-
