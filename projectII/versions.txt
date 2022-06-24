@@ -2,3 +2,4 @@ v1 - Chain graphs analysis
 v2 - Tree graphs analysis
 v3 - Dictator graphs analysis
 v4 - Double chain graphs analysis
+v5 - Complete graph analisys

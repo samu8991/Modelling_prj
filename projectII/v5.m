@@ -36,7 +36,6 @@ results = cell.empty(4,0);
 rng(0);
 
 rc = factor(n_experiments);
-rc(2) = 1;
 
 for i = 1:n_experiments
     %% Graph definition

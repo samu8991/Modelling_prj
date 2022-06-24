@@ -1,4 +1,4 @@
-function [png_vct, adj_mtx] = generate_adj_mtx(type, n, show, N)
+function [png_vct, adj_mtx, Q] = generate_adj_mtx(type, n, show, N)
 arguments
     type
     n = 1;
@@ -45,6 +45,29 @@ elseif type == "doublechain"
             adj_mtx(5,3) = 1e4; % From 3 to 5
             adj_mtx(4,2) = 1e2; % From 2 to 4
             adj_mtx(6,4) = 1e3; % From 4 to 6
+    end
+elseif type == "looped_doublechain"
+    switch (n)
+        case -1 
+            png_vct = 2;
+        case 1
+            png_vct(1) = 1;
+            png_vct(2) = 1;
+            adj_mtx(3,1) = 1; % From 1 to 3
+            adj_mtx(5,3) = 1; % From 3 to 5
+            adj_mtx(3,5) = 1; % loop
+            adj_mtx(4,2) = 1; % From 2 to 4
+            adj_mtx(6,4) = 1; % From 4 to 6
+            adj_mtx(4,6) = 1; % loop
+        case 2
+            png_vct(1) = 100;
+            png_vct(2) = 1;
+            adj_mtx(3,1) = 1; % From 1 to 3
+            adj_mtx(5,3) = 1; % From 3 to 5
+            adj_mtx(3,5) = 1; % loop
+            adj_mtx(4,2) = 1; % From 2 to 4
+            adj_mtx(6,4) = 100; % From 4 to 6
+            adj_mtx(4,6) = 1; % loop
     end
 elseif type == "tree"
     switch(n) 
@@ -98,13 +121,21 @@ elseif type == "tree"
 elseif type == "complete"
     switch(n)
         case -1 
-            png_vct = 2;
+            png_vct = 4;
         case 1 % equal weights at 1
             png_vct = ones(N,1);
             adj_mtx = ones(N) - eye(N);
         case 2 % equal weights at 100
             png_vct = 100 * ones(N,1);
             adj_mtx = 100 * (ones(N) - eye(N));
+        case 3 % Random 1
+            png_vct = 100 * rand * ones(N,1);
+            adj_mtx = 100*rand(N);
+            adj_mtx = adj_mtx - diag(diag(adj_mtx));
+        case 4 % Random 2
+            png_vct = 100 * rand * ones(N,1);
+            adj_mtx = 100 * rand(N);
+            adj_mtx = adj_mtx - diag(diag(adj_mtx));
     end
 elseif type == "dictator"
     adj_mtx = zeros(N);
@@ -132,10 +163,12 @@ elseif type == "dictator"
     end
 end
 
+if n ~= -1
+    Q = [zeros(1,N+1); png_vct, adj_mtx];
+end
 if show % visualize the graph
-    mtx_complete = [zeros(1,N+1); png_vct, adj_mtx]';
     names = ["s0" "s1" "s2" "s3" "s4" "s5" "s6"];
-    plot(digraph(mtx_complete, names));
+    plot(digraph(Q', names));
 end
 
 end
