@@ -97,7 +97,7 @@ elseif type == "tree"
         case 4 % same convergence time
             png_vct(1) = 1;
             png_vct(2) = 1;
-            b = 100;
+            b = 1000;
             adj_mtx(3,1) = b;
             adj_mtx(4,1) = b;
             adj_mtx(5,2) = b;

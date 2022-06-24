@@ -93,7 +93,7 @@ In `Configuration 6` the tree is _unbalanced_ and this fact heavily modify the b
 
 It seems that these times follow the next constraint
 $$
-T_i \propto \frac{1}{\Omega_i}, \text{   where } \Omega_i = \sum_{j=1}^{d} \frac{1}{w_j}
+T_i \propto {\Omega_i}, \text{   where } \Omega_i = \sum_{j=1}^{d} \frac{1}{w_j}
 $$
 
 It is clear that the bigger the weight and smaller the depth, the faster the convergence. Node `s2` has de 1 and weight 10, thus is the first to converge. The second place belongs to `s6` which is a direct child of `s2` and has again a weight of 10. Then, `s1` converges and it has depth 1, but weight 10 and next we find `s4`, which is a direct child of `s1` and has weight 10. Finally `s2` is a direct child of `s2` (si, depth 2) but has weight 1 and `s3` has depth 2 but weight 1.
@@ -101,7 +101,7 @@ It is clear that the bigger the weight and smaller the depth, the faster the con
 To further investigate the relationship with the depth, we experimented with another network structure, which is presented in the following section.
 
 ## Dictator structure
-We called "dicator" the structure in which each agent is directly connected with the leader and no-one else. The following figure illustrate the concept.
+We called "dictator" the structure in which each agent is directly connected with the leader and no-one else. The following figure illustrate the concept.
 
 ![](img/dictator_general.png)
 
@@ -184,7 +184,50 @@ In thi section we now discuss the chosen network, in terms of cost and performan
 ================DA SCRIVERE!!!!================
 
 # Comparison between architectures
+In order to perform these tests we choose the tree structure because we took in to consideration two factors: the structure generality and the feasibility in terms of applications domain , i.e. the mag-lev.
+The dictator and full-graph structure put us in a centralized-like context moreover trees don't have cycles  and, as said before, we found that this is a good property; hence, due to these considerations, we believe that trees are the most significant structure to analyze.  
+
 ## Cambiando il segnale generato dal leader
+
+In this scenario we are going to perform some tests on a tree changing each time the reference value imposed by the leader node: step, ramp and sine wave and also changing the architecture so firstly with a neighborhood observer and secondly with a local observer; so that it is possible to appreciate the difference between them.
+
+###  Distributed regulator based on a distributed neighborhood observer 
+
+The outcomes of our tests, based on our metrics, are the following and they took into consideration all the three scenarios:
+
+#### 1.  System Convergence Time (SCT)
+
+| Step     | 15.000     |
+| -------- | ---------- |
+| **Ramp** | **14.990** |
+| **Sine** | **14.990** |
+
+
+
+#### 2. Complete Agents Convergence time (CACT)
+
+| Step     | 89.999     |
+| -------- | ---------- |
+| **Ramp** | **89.998** |
+| **Sine** | **89.995** |
+
+#### 3.  Agent Convergence Order (ACO)
+
+| Step     | 1     | 2     | 3     | 4     | 5     | 6     |
+| -------- | ----- | ----- | ----- | ----- | ----- | ----- |
+| **Ramp** | **1** | **2** | **3** | **4** | **5** | **6** |
+| **Sine** | **1** | **2** | **3** | **4** | **5** | **6** |
+
+
+
+#### 4.  Global Disagreement Error (GDE)
+
+
+
+### Distributed regulator based on local observers
+
+
+
 ## Cambiando il rumore di misurazione
 ## Cambiando c, Q e R
 # Modified theory

@@ -3,3 +3,5 @@ v2 - Tree graphs analysis
 v3 - Dictator graphs analysis
 v4 - Double chain graphs analysis
 v5 - Complete graph analisys
+p1 - Neighborhood controller and Neighborhood observer
+p2 - Neighborhood controller and Local observer
