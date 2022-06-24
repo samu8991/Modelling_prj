@@ -29,13 +29,14 @@ C = C_plant; % for the agent's observers
 
 %% Experiment begin
 
-type = "tree";
+type = "complete";
 %figure 
 n_experiments = generate_adj_mtx(type, -1);
 results = cell.empty(4,0);
 rng(0);
 
 rc = factor(n_experiments);
+rc(2) = 1;
 
 for i = 1:n_experiments
     %% Graph definition
@@ -102,4 +103,3 @@ for i = 1:n_experiments
     title(strcat("GDE - Confguration ", int2str(i)));
 end
 linkaxes(a, 'y');
-

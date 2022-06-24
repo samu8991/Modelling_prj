@@ -29,7 +29,7 @@ C = C_plant; % for the agent's observers
 
 %% Experiment begin
 
-type = "tree";
+type = "dictator";
 %figure 
 n_experiments = generate_adj_mtx(type, -1);
 results = cell.empty(4,0);
@@ -103,3 +103,12 @@ for i = 1:n_experiments
 end
 linkaxes(a, 'y');
 
+%% results 4
+figure
+ct = metric_ACO(results{5}, true, 1e3);
+ct = ct(:,2);
+weights = [1e5; 1e4; 1e3; 1e2; 1e1; 1];
+semilogx(weights, ct, '-*');
+% fitted = fit(weights, ct, "exp2")
+% hold on
+% plot(fitted);

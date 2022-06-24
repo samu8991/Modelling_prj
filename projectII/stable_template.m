@@ -6,7 +6,7 @@ D_plant = 0;
 
 %% Initial conditions
 x0_agent = [0 0];
-x0_leader= [10 0];
+x0_leader= [.1 0];
 
 %% Modified plant
 signal_reference = 3; % Might be 1, 2 or 3 for step, ramp and sinevawe
