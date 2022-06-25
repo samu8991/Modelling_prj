@@ -40,13 +40,15 @@ Each of these files contains a different configuration for the system. The file 
 
 
 # Network structure analysis
+> If no
 
 ## Chain structure
-We performed several experiments with the chain structure. In the cases where there wasn't a forward edge between follower nodes, or loop structures in the chain , we have noticed that.
+We performed several experiments with chain structure. In the cases where there wasn't a forward edge between follwer nodes, or loop structures in the chain.
+![](img/chain_general.png)
 
 ### Observation 1
 
-*In a chain structure network, where there aren't forward edges among follower nodes or loop structures in the chain, if we have nodes i and j, and node j is the successor nodes of node i in the chain and all the weights associated with the edges are equal:*
+*In a chain structure network, where there aren't forward edges among follower nodes or loop structures in the chain, if we have nodes i and j, and node j is the successor nodes of node i in the chain , and all the weights associated with the edges are equal:*
 $$
 Tc_{j}>Tc_{i}  
 $$
@@ -54,7 +56,7 @@ $$
 -  $Tc_{j}$ *is the convergence time of node j*
 - $Tc_{i}$ *is the convergence time of node i*
 
-In the following, we report the table of the convergence times for each nodes.
+In the following, we report the table of the convergence times for each nodes,
  
 | Node $i$ | Convergence time  |	
 |--|--|
@@ -68,7 +70,7 @@ In the following, we report the table of the convergence times for each nodes.
 We went forward with the experiments changing the weights associated with the edges, with the same network topology described previously. We have noticed that *Observation 1* is still true and also we observed that,
 
 ### Observation 2
-*In a chain structure, like the one described in Obeservtion 1, if node j is the successor of node i, and $w_{(j,i)}$  is the weight associated with the edge (i,j), then,*
+*In a chain structure, like the one described in Obeservtion 1, if node j is the successor of node i, and $w_{(j,i)}$  is the weight associated with the edges (i,j), then,*
 
 $$
 w_{(j,i)}\rightarrow \infty \Rightarrow Tc_{j} \rightarrow Tc_{i}
@@ -77,9 +79,9 @@ $$
 -  $Tc_{j}$ *is the convergence time of node j*
 - $Tc_{i}$ *is the convergence time of node i*
 
-In fact, in our example, inscreasing the weight associated with the edges $(5,6)$ up to 100, leaving all others weight in the network equal to 1,  we noticed that $Tc_6$ approaches  $Tc_5$, without ever going under it. From the following table shown we can see how, with this new configuration of weights,   $Tc_{6}\simeq Tc_{5}$.
+In fact , in our example, inscreasing the weight associated with the edges $(5,6)$ up to 100, leaving all others weight in the network equal to 1,  we can notice that $Tc_6$ approaches  $Tc_5$, without ever going under it. From the table shown in the following we can see how, with this new configuration of weights,   $Tc_{6}\simeq Tc_{5}$.
 
-|Nodes $i$ | Convergence Time|
+|Node $i$ | Convergence Time|
 |--|--|
 |1|11.2141|
 |2|12.0108|
@@ -90,40 +92,84 @@ In fact, in our example, inscreasing the weight associated with the edges $(5,6)
 
 We can have a better idea of the impact that the weights have on convergence time of a generic node $i$, looking at its global disagreement error (GDE), in the following we report the trend of GDE for each node in experiment one and two.
 
-GRAFICO2_GDE
 
-We can see that the behaviour of the GDE for each node in the experimet one are equidistant from each other, because all weights are set to 1.  On the other hand in the *experiment 2* we can notice that the GDE trend of nodes 6 collapses on the GDE trend of node 5. The reason for this behaviour is that, for this experiment we set $w_{6,5}=100$ .
+![](img/Grafico2_GDE.png)
+
+We can see that the trends of GDE for each node in the experimet one are equidistant from each other, because all weights are set to 1.  On the other hand in the *experiment 2* we can notice that the GDE trend of nodes 6 collapses on the GDE trend of node 5. The reason of this behaviour is that, for this experiment we set $w_{6,5}=100$ .
 
 After the experiments described previously, we changed the network topografy, by adding a forward edge. From that experiment we noticed that the node, that receive the information thanks to the forward edge, reduces its convergence time in according to "euristich " rules.
 
 ### Observation 3
 *If in a chain structure, like the one described previously, we add a forward edge from node $i$ to node $j$, the improvment on convergence time of node j depends on:*
--  $$d_{li}=\sum_{k=1}^i w_{(k,k-1)}$$ 
-*The sum of the weights associated with the edges among leader node and $i$*
+-  $$d_{li}=\sum_{k=1}^i \frac{1}{w_{(k,k-1)}}$$ 
+*The sum of the weights's reciprocals associated with the edges among leader node and $i$*
 
-- $$d_{ij}=\sum_{k=i}^j w_{(k,k-1)}$$
- *The sum of the weights associated with the edges among $i$ and $j$ in the original chain structure*
+- $$d_{ij}=\sum_{k=i}^j \frac{1}{w_{(k,k-1)}}$$
+ *The sum of the weight's reciprocals of the weights associated with the edges among $i$ and $j$ in the original chain structure*
 
--  $$d_{fij}=w_{(j,i)}$$
-*The weight associated with the forward edge $(i,j)$*
+-  $$d_{fij}=\frac{1}{w_{(j,i)}}$$
+*The weight's reciprocal associated with the forward edge $(i,j)$*
 
 To better understand the behavior of node convergence , we tried different configuration of chain structures by adding for every try different edges.
 ##### Configuration 1
 
-IMG_structure1
+![](img/Configuration1.png)
 
 ##### Configuration 2
 
-IMG_structure2
+![](img/Configuration2.png)
 
 ##### Configuration 3
 
-IMG_structure3
+![](img/Configuration3.png)
 
 In this experiment all weights associated with the edges for all structure are set to one. In fact, the aim now is to study the convergence time for different networks topolgy. In particular we focus our attention on node 6 because we modify only the input degree of this node and the nodes from where it gets information. The results for this experiments are shown below.
 
-GRAFICO3_GDE
+##### Time Convergece table 
+|Node $i$|Time Convergence Configuration 1|Time Convergence Configuration 2|Time Convergence Configuration 3|
+|--|--|--|--|
+|1|11.2141|11.2141|11.2141|
+|2|12.0108|12.0108|12.0108|
+|3|12.4916|12.4916|12.4916|
+|4|12.8382|12.8382|12.8382|
+|5|13.1102|13.1102|13.1102|
+|6|12.8382|12.9828|13.1102|
 
+
+
+![](img/Grafico3_GDE.png)
+
+
+
+We noticed that the first configuration collapses to a binary tree structure, (which will be discussed better later), in fact the behaviour on nodes 6 is equal to the behaviour of node 6 .
+
+ In the second configuration the nodes 6 converges with greater delay respect the first configuration, despite we leave the forward edge  from node 3 to node 6. But node 6 converges before node 5. This makes us suspect that the information that node 6 take by node 5, increases the convergence time. 
+
+In the third configuration node 6 take information by node 4, a node that is farther from the leader respect nodes 3 and we noticed that the time convergence of node 6 increases, exceeding the convergence time of node 5.
+
+#### Heuristics rule
+*In a chain configuration structure, if all edges have the same weights,when we apply a forward edge from node i to node j, decreasing $d_{li}$, $d_{ij}$ and $d_{fij}$, we increase the improvement in terms of convegece time*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+ 
 
 ## Tree structure
 
@@ -480,3 +526,23 @@ We analyzed such a system and computed the Synchronization Region. The following
 This plot shows us, under the conditions we designed the controller and the observer, the system converges.
 
 This is surely a particular case, but this new method assures the existance of some conditions on $A$ such that this architecture is stable.
+
+We performed a simulation with the configuration just explained and the results is visible in the following figure.
+
+![](img/alternative_high_frequency.png)
+
+![](img/alternative_high_frequency_zoom.png)
+The simulation was performed with a sinusoidal command reference with frequency $\omega = 100 \ rad/s$. The convergence time is considered as the first last time the error $|y_i - y_0|$ is less than 1%.
+
+| Node | Convergence time (s) |
+| ---- | -------------------- |
+| 1    | 7.68                 |
+| 2    | 10.83                |
+| 3    | 13.49                |
+| 4    | 16.00                |
+| 5    | 18.44                |
+| 6    | 20.86                |
+
+The nodes were connected in a chain, beacuse this result was obtained during the early phase of the project. The GDE is also order of magnitude smaller then the one in the other cases, since thi system only requires one observer.
+
+![](img/alternative_sinewave_error.png)
