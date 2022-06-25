@@ -47,8 +47,8 @@ for a=1:3
     standard_model_variables("local_or_neighborhood_observer",1,"eps_on",1,"zeta_on",1,"measurement_noise_type",4);
     
     %% Agents' Controller
-    Q = diag([1 1]);
-    R = 1;
+    Q = diag([0.1 0.1]);
+    R = 1000;
     P = are(A,B/R*B',Q);
     K = B'/R*P;
     
@@ -71,7 +71,7 @@ for a=1:3
     F = P * C' / R;
     
     %% Simulation
-    time = 35;
+    time = 15;
     out = sim('stable_model_system');
     
     subplot(3,1,a);
@@ -81,7 +81,10 @@ for a=1:3
     metric_GDE(out,true)
     CACT_vec(a) =metric_CACT(out);
     ACO_vec(a,:) =metric_ACO(out);
-    
+    figure
+    subplot(3,1,a);
+    plot(out.u_sig)
+
     switch(a)
         case 1
             title("Global Disagreement Error[STEP]");
