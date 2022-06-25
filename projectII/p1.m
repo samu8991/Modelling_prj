@@ -44,7 +44,7 @@ for a=1:3
     
     %% Simulink variables
     
-    standard_model_variables("local_or_neighborhood_observer",1,"eps_on",1,"zeta_on",1,"measurement_noise_type",1);
+    standard_model_variables("local_or_neighborhood_observer",1,"eps_on",1,"zeta_on",1,"measurement_noise_type",4);
     
     %% Agents' Controller
     Q = diag([1 1]);
@@ -59,7 +59,7 @@ for a=1:3
     lambda = eig(lpc_mtx + png_mtx); 
     den = 2 * min(real(lambda));
     
-    c = 1/den;
+    c = 100/den;
     
     %% Leader observer
     L = acker(A_plant', C_plant', [-1 -1]);
