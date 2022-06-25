@@ -259,8 +259,68 @@ The outcomes of our tests, based on our metrics, are the following and they took
 ![](C:\Users\AnnaPaola\Desktop\model\projectII\img\GDE_tree.png)
 
 ## Cambiando il rumore di misurazione
+In order to perform these set of tests we decided to let c,Q and R in the default configuration (Q = 1, R = 1 and multiplicative factor of c = 10) and we changed the tipology of error in the following fashion:
+
+#### Ramp error
+
+In this case we expect the system to diverge since the error increase in time
+
+![](/home/voidjocker/Documents/University/MCCS/Modelling_prj/projectII/img/GDE c=1 Q=R=1/GDE_ramp.png)
+
+#### Sine error
+
+![](/home/voidjocker/Documents/University/MCCS/Modelling_prj/projectII/img/GDE c=1 Q=R=1/GDE_sin.png)
+
+#### Random error
+
+![](/home/voidjocker/Documents/University/MCCS/Modelling_prj/projectII/img/GDE c=1 Q=R=1/GDE_random.png)
+
 ## Cambiando c, Q e R
+
+In order to perform these set of tests we decided to change c,Q and R in particular cases using a random noise.
+
+####  R = 1000 Q = 0.1
+
+![](/home/voidjocker/Documents/University/MCCS/Modelling_prj/projectII/img/c=10 variazione QedR/RANDOM_ERROR/errore4_Q_01_R_1000.png)  
+
+Having this configuration we would expect to have a worst performance with rispect to a configuration with a higher Q and  a minimized energy command signal.
+
+
+
+#### R = 1000 Q = 1000
+
+![](/home/voidjocker/Documents/University/MCCS/Modelling_prj/projectII/img/c=10 variazione QedR/RANDOM_ERROR/errore4_R_1000_Q_1000.png)
+
+In this case, with a higher Q, we actually increased the performnce of the system since the order of magnitude of the error is decreased.
+
+#### Q = 1000 R=0.1
+
+
+
+![](/home/voidjocker/Documents/University/MCCS/Modelling_prj/projectII/img/c=10 variazione QedR/RANDOM_ERROR/Q_1000_R=01.png)
+
+#### Q = 0.1 R = 0.1
+
+![](/home/voidjocker/Documents/University/MCCS/Modelling_prj/projectII/img/c=10 variazione QedR/RANDOM_ERROR/Q_01_R_01.png)
+
+As expected this configuration has a behaviour analogous to the one Q = 1000, R=1000 since their ratio is the same.
+
+Now we decided to keep fixed Q and R to one and changed the multiplicative factor of c.
+
+#### Numerator equals 1
+
+![](/home/voidjocker/Documents/University/MCCS/Modelling_prj/projectII/img/GDE c=1 Q=R=1/GDE_random.png)
+
+#### Numerator equals 10
+
+![](/home/voidjocker/Documents/University/MCCS/Modelling_prj/projectII/img/GDE C=10 Q=R=1/error_random.png)
+
+#### Numerator equals 100
+
+![](/home/voidjocker/Documents/University/MCCS/Modelling_prj/projectII/img/GDE c=100 Q=R=1/GDE_random.png)
+
 # Modified theory
+
 Initially we wanted to control the maglev using the observer given by the theory. The problem was that the observer estimates only the state of the stabilized system, making it useless for our purposes. Throught trial and error, we reached a point such that the estimation was the one we expected. We shall now explain this fact from a mathematical point of view.
 
 We have the following system:
