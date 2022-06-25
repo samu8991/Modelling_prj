@@ -37,14 +37,14 @@ sys = ss(A, B, eye(2), zeros(2,1));
 
 %% Graph definition
 N = 6;
-adj_mtx = [0 0 0 0 0 1
+adj_mtx = [0 0 0 0 0 0
            1 0 0 0 0 0
            0 1 0 0 0 0
            0 0 1 0 0 0
            0 0 0 1 0 0
-           0 0 0 0 0 0];
+           0 0 0 0 1 0];
 png_vct = zeros(N, 1); % pinning vector
-png_vct(6) = 1;
+png_vct(1) = 1;
 png_mtx = diag(png_vct); % pinning matrix
 
 %% Simulink configuration
@@ -96,7 +96,7 @@ F = P * C' / R;
 
 %% Simulation
 time = 50;
-out = sim('model');
+out = sim('alternative_model');
 
 %% Plots
 close all;

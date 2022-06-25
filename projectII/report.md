@@ -40,7 +40,7 @@ Each of these files contains a different configuration for the system. The file 
 
 
 # Network structure analysis
-> If no
+> If no otherwise specified, the convergence times correspond to the time $t^\star$ such that the error $|y_i(t) - y_0(t)| < 100\ \  |\ \  t \ge t^\star$, 
 
 ## Chain structure
 We performed several experiments with chain structure. In the cases where there wasn't a forward edge between follwer nodes, or loop structures in the chain.
@@ -48,7 +48,7 @@ We performed several experiments with chain structure. In the cases where there 
 
 ### Observation 1
 
-*In a chain structure network, where there aren't forward edges among follower nodes or loop structures in the chain, if we have nodes i and j, and node j is the successor nodes of node i in the chain , and all the weights associated with the edges are equal:*
+*In a chain structure network, where there aren't forward edges among follower nodes or loop structures in the chain, if we have nodes i and j, and node j is the successor nodes of node i in the chain, and all the weights associated with the edges are equal:*
 $$
 Tc_{j}>Tc_{i}  
 $$
@@ -67,10 +67,10 @@ In the following, we report the table of the convergence times for each nodes.
 |5|13.1102|
 |6|13.3334|
 
-We went forward with the experiments changing the weights associated with the edges, with the same network topology described previously. We have noticed that *Observation 1* is still true and also we observed that,
+We went forward with the experiments changing the weights associated with the edges, with the same network topology described previously. We have noticed that *Observation 1* is still true.
 
 ### Observation 2
-*In a chain structure, like the one described in Obeservtion 1, if node j is the successor of node i, and $w_{(j,i)}$  is the weight associated with the edges (i,j), then,*
+*In a chain structure, like the one described in Observation 1, if node j is the successor of node i, and $w_{(j,i)}$  is the weight associated with the edges (i,j), then,*
 
 $$
 w_{(j,i)}\rightarrow \infty \Rightarrow Tc_{j} \rightarrow Tc_{i}
@@ -79,7 +79,7 @@ $$
 -  $Tc_{j}$ *is the convergence time of node j*
 - $Tc_{i}$ *is the convergence time of node i*
 
-In fact , in our example, inscreasing the weight associated with the edges $(5,6)$ up to 100, leaving all others weight in the network equal to 1,  we can notice that $Tc_6$ approaches  $Tc_5$, without ever going under it. From the table shown in the following we can see how, with this new configuration of weights,   $Tc_{6}\simeq Tc_{5}$.
+In fact, in our example, inscreasing the weight associated with the edges $(5,6)$ up to 100, leaving all others weight in the network equal to 1,  we can notice that $Tc_6$ approaches  $Tc_5$, without ever going under it. From the table shown in the following we can see how, with this new configuration of weights,   $Tc_{6}\simeq Tc_{5}$.
 
 |Node $i$ | Convergence Time|
 |--|--|
@@ -95,9 +95,9 @@ We can have a better idea of the impact that the weights have on convergence tim
 
 ![](img/Grafico2_GDE.png)
 
-We can see that the trends of GDE for each node in the experimet one are equidistant from each other, because all weights are set to 1.  On the other hand in the *experiment 2* we can notice that the GDE trend of nodes 6 collapses on the GDE trend of node 5. The reason of this behaviour is that, for this experiment we set $w_{6,5}=100$ .
+We can see that the trends of GDE for each node in the experimet one are equidistant from each other, because all weights are set to 1.  On the other hand in the *experiment 2* we can notice that the GDE trend of nodes 6 collapses on the GDE trend of node 5. The reason for this behaviour is that, for this experiment we set $w_{6,5}=100$ .
 
-After the experiments described previously, we changed the network topografy, by adding a forward edge. From that experiment we noticed that the node, that receive the information thanks to the forward edge, reduces its convergence time in according to "euristich " rules.
+After the experiments described previously, we changed the network topology, by adding a forward edge. From that experiment we noticed that the node, that receive the information thanks to the forward edge, reduces its convergence time in according to some sort of rule.
 
 ### Observation 3
 *If in a chain structure, like the one described previously, we add a forward edge from node $i$ to node $j$, the improvment on convergence time of node j depends on:*
@@ -123,9 +123,10 @@ To better understand the behavior of node convergence , we tried different confi
 
 ![](img/Configuration3.png)
 
-In this experiment all weights associated with the edges for all structure are set to one. In fact, the aim now is to study the convergence time for different networks topolgy. In particular we focus our attention on node 6 because we modify only the input degree of this node and the nodes from where it gets information. The results for this experiments are shown below.
+In this experiment all the weights are set to one. In fact, the aim now is to study the convergence time for different networks topolgy. In particular, we focus our attention on node 6 because we modify only the input degree of this node and the nodes from where it gets information. The results for this experiments are shown below.
 
 ##### Time Convergece table 
+
 |Node $i$|Time Convergence Configuration 1|Time Convergence Configuration 2|Time Convergence Configuration 3|
 |--|--|--|--|
 |1|11.2141|11.2141|11.2141|
@@ -141,35 +142,14 @@ In this experiment all weights associated with the edges for all structure are s
 
 
 
-We noticed that the first configuration collapses to a binary tree structure, (which will be discussed better later), in fact the behaviour on nodes 6 is equal to the behaviour of node 6 .
+We noticed that the first configuration collapses to a binary tree structure, (which will be discussed better later), in fact the behaviour on nodes 6 is equal to the behaviour of node 4.
 
- In the second configuration the nodes 6 converges with greater delay respect the first configuration, despite we leave the forward edge  from node 3 to node 6. But node 6 converges before node 5. This makes us suspect that the information that node 6 take by node 5, increases the convergence time. 
+ In the second configuration the nodes 6 converges with greater delay respect the first configuration, despite we leave the forward edge  from node 3 to node 6. But node 6 converges before node 5. This makes us suspect that the information that node 6 taken by node 5, increases the convergence time. 
 
-In the third configuration node 6 take information by node 4, a node that is farther from the leader respect nodes 3 and we noticed that the time convergence of node 6 increases, exceeding the convergence time of node 5.
+In the third configuration node 6 take information from node 4, a node that is farer from the leader than nodes 3 and we noticed that the convergence time of node 6 increases, exceeding the convergence time of node 5.
 
-#### Heuristics rule
+#### Experimental rule
 *In a chain configuration structure, if all edges have the same weights,when we apply a forward edge from node i to node j, decreasing $d_{li}$, $d_{ij}$ and $d_{fij}$, we increase the improvement in terms of convegece time*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
- 
 
 ## Tree structure
 
@@ -380,10 +360,10 @@ The configuration used for testing both the architectures is: R = Q= 1 and a thr
 
 ![](img/GDE_tree.png)
 
-As known from the theory we expect the two architectures to have the same convergence time and this is what it is possible to see from these plots. 
+As known from the theory we expect the two architectures to have the same convergence time and it can be seen from these plots. 
 
 ## Effects of Measurement noises
-In order to perform these set of tests we decided to let c,Q and R in the default configuration (Q = 1, R = 1 and multiplicative factor of c = 10) and we changed the tipology of error in the following fashion:
+In order to perform these set of tests we decided to let c,Q and R in the default configuration (Q=1, R=1 and multiplicative factor of c=10) and we changed the tipology of error in the following fashion:
 
 ### Ramp error
 
@@ -402,15 +382,15 @@ We also decided to show the robustness of the system changing the amplitude of t
 
 #### Mean 2 variance 1
 
-![](img\c10Q1R1noisemag\mean2var1.png)
+![](img/c10Q1R1noisemag/mean2var1.png)
 
 #### Mean 3 variance 2
 
-![](img\c10Q1R1noisemag\mean3var2.png)
+![](img/c10Q1R1noisemag/mean3var2.png)
 
 #### Mean 5 var 1
 
-![](img\c10Q1R1noisemag\mean5var1.png)
+![](img/c10Q1R1noisemag/mean5var1.png)
 
 As it is possible to see there is no case in which we reach convergence so we can say that the control used it is not so robust.
 
@@ -437,15 +417,15 @@ In this case, with a higher Q, we actually increased the performnce of the syste
 
 ![](img/c=10_variazione_QedR/RANDOM_ERROR/Q_01_R_01.png)
 
-As expected this configuration has a behaviour analogous to the one Q = 1000, R=1000 since their ratio is the same.
+As expected this configuration has a behaviour analogous to the one Q=1000, R=1000 since their ratio is the same.
 
 To better understand the preceding comments about R and the energy of the signal, we show the following plots:
 
- ![](img\u_s1_s3_R=0.1.png)
+![](img/u_s1_s3_R=0.1.png)
 
-![](img\u_s1_s3_R=1000.png)
+![](img/u_s1_s3_R=1000.png)
 
-It's clear from the first plot (R=0.1) that the command input is not minimized while in the second plot (R=1000) this happen, indeed these two plots show a completely different order of magnitude. Moreover we plotted the command input of two nodes at two different depths and this allow us to see, regardless the value of R, the much higher effort that a node more distant from the leader has to face compared to one node closer.
+It is clear from the first plot (R=0.1) that the command input is not minimized while in the second plot (R=1000) this happen, indeed these two plots show a completely different order of magnitude. Moreover we plotted the command input of two nodes at two different depths and this allows us to see, regardless the value of R, the much higher effort that a node more distant from the leader has to face compared to a closer one.
 
 ## Effect of coupling gain
 
