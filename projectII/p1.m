@@ -59,7 +59,7 @@ for a=1:3
     lambda = eig(lpc_mtx + png_mtx); 
     den = 2 * min(real(lambda));
     
-    c = 100/den;
+    c = 10/den;
     
     %% Leader observer
     L = acker(A_plant', C_plant', [-1 -1]);
@@ -71,7 +71,7 @@ for a=1:3
     F = P * C' / R;
     
     %% Simulation
-    time = 15;
+    time = 35;
     out = sim('stable_model_system');
     
     subplot(3,1,a);
