@@ -56,8 +56,8 @@ $$
 -  $Tc_{j}$ *is the convergence time of node j*
 - $Tc_{i}$ *is the convergence time of node i*
 
-In the following, we report the table of the convergence times for each nodes,
- 
+In the following, we report the table of the convergence times for each nodes.
+
 | Node $i$ | Convergence time  |	
 |--|--|
 |1|11.2141|
@@ -320,7 +320,9 @@ In this scenario we are going to perform some tests on a tree changing each time
 
 ###  Distributed regulator based on a distributed neighborhood observer 
 
-The outcomes of our tests, based on our metrics, are the following and they took into consideration all the three scenarios:
+The outcomes of our tests, based on our metrics, are the following and they took into consideration all the three scenarios.
+
+The configuration used for testing both the architectures is: R = Q= 1 and a threshold = 100(to find convergence time )
 
 #### 1.  System Convergence Time (SCT)
 
@@ -378,7 +380,7 @@ The outcomes of our tests, based on our metrics, are the following and they took
 
 ![](img/GDE_tree.png)
 
-==Chi converge prima? E perché? C'è differenza nell'errore??==
+As known from the theory we expect the two architectures to have the same convergence time and this is what it is possible to see from these plots. 
 
 ## Effects of Measurement noises
 In order to perform these set of tests we decided to let c,Q and R in the default configuration (Q = 1, R = 1 and multiplicative factor of c = 10) and we changed the tipology of error in the following fashion:
@@ -396,7 +398,21 @@ In this case we expect the system to diverge since the error increase in time
 ### Random error
 
 ![](img/GDE_c=1_Q=R=1/GDE_random.png)
-==Descrivere la robustezza del sistema==
+We also decided to show the robustness of the system changing the amplitude of the random error.
+
+#### Mean 2 variance 1
+
+![](img\c10Q1R1noisemag\mean2var1.png)
+
+#### Mean 3 variance 2
+
+![](img\c10Q1R1noisemag\mean3var2.png)
+
+#### Mean 5 var 1
+
+![](img\c10Q1R1noisemag\mean5var1.png)
+
+As it is possible to see there is no case in which we reach convergence so we can say that the control used it is not so robust.
 
 ## Effect of matrices Q e R
 
@@ -423,10 +439,16 @@ In this case, with a higher Q, we actually increased the performnce of the syste
 
 As expected this configuration has a behaviour analogous to the one Q = 1000, R=1000 since their ratio is the same.
 
-==Mostrare unico plot di u in cui si cambia R e dire che in generale più grande è R più piccolo è u==
+To better understand the preceding comments about R and the energy of the signal, we show the following plots:
 
+ ![](img\u_s1_s3_R=0.1.png)
+
+![](img\u_s1_s3_R=1000.png)
+
+It's clear from the first plot (R=0.1) that the command input is not minimized while in the second plot (R=1000) this happen, indeed these two plots show a completely different order of magnitude. Moreover we plotted the command input of two nodes at two different depths and this allow us to see, regardless the value of R, the much higher effort that a node more distant from the leader has to face compared to one node closer.
 
 ## Effect of coupling gain
+
 Now we decided to keep fixed Q and R to one and changed the multiplicative factor of c.
 
 #### Numerator equals 1
@@ -441,7 +463,7 @@ Now we decided to keep fixed Q and R to one and changed the multiplicative facto
 
 ![](img/GDE_c=100_Q=R=1/GDE_random.png)
 
-==Fare una simulaizone con sinewave e tempo grande (fino a convergenza) e vedi se convergono prima i nodi col peso 100 o quelli 1 E scrivi che c'è una correlazione tra gli autovalori di L+G e come questi autovalori influiscono sulla convergenza==
+In the case of a multiplicative factor of 100 and a sine signal reference we can see that nodes at depth 2 from the leader have a delay in convergence with respect to nodes closer and this is also due to the weights of the graph that are also the eigenvalues of the laplacian matrix.
 
 # Modified theory
 
