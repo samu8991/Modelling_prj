@@ -5,12 +5,12 @@
 
 # Introduction 
 
-This project implements a system of 6 distribuited magnetic levitation systems, leanirized in an equilibrium point. We applied the theory as described in section 3 of the book [Cooperative Control of Multi-Agent Systems](https://link.springer.com/book/10.1007/978-1-4471-5574-4). 
+This project implements a system of 6 distribuited magnetic levitation systems, linearized in an equilibrium point. We applied the theory as described in chapter 3 of the book [Cooperative Control of Multi-Agent Systems](https://link.springer.com/book/10.1007/978-1-4471-5574-4). 
 In the first section we briefly explain the simulink model and the code used for the simulations, as well as the other files of the project. The second section briefly analize the performance of different network structures in terms of Global Disagreement Error on the output of the systems. The third section is dedicated to the comparison of the performances when using either a distributed observer or a local one. Finally, the last section explains a slightly different architecture that works for our systems, even tough we could not proove the general case.
 
 # Files arrangement
 
-For information about the simulink and matlab implementation, please refer to the file README.md.
+For information about the simulink and matlab implementation, please refer to the file [README.md](./README.md).
 
 There are 4 types of files.
 
@@ -42,6 +42,88 @@ Each of these files contains a different configuration for the system. The file 
 # Network structure analysis
 
 ## Chain structure
+We performed several experiments with the chain structure. In the cases where there wasn't a forward edge between follower nodes, or loop structures in the chain , we have noticed that.
+
+### Observation 1
+
+*In a chain structure network, where there aren't forward edges among follower nodes or loop structures in the chain, if we have nodes i and j, and node j is the successor nodes of node i in the chain and all the weights associated with the edges are equal:*
+$$
+Tc_{j}>Tc_{i}  
+$$
+*where:*
+-  $Tc_{j}$ *is the convergence time of node j*
+- $Tc_{i}$ *is the convergence time of node i*
+
+In the following, we report the table of the convergence times for each nodes.
+ 
+| Node $i$ | Convergence time  |	
+|--|--|
+|1|11.2141|
+|2|12.0108|
+|3|12.4916|
+|4|12.8382|
+|5|13.1102|
+|6|13.3334|
+
+We went forward with the experiments changing the weights associated with the edges, with the same network topology described previously. We have noticed that *Observation 1* is still true and also we observed that,
+
+### Observation 2
+*In a chain structure, like the one described in Obeservtion 1, if node j is the successor of node i, and $w_{(j,i)}$  is the weight associated with the edge (i,j), then,*
+
+$$
+w_{(j,i)}\rightarrow \infty \Rightarrow Tc_{j} \rightarrow Tc_{i}
+$$
+*where:*
+-  $Tc_{j}$ *is the convergence time of node j*
+- $Tc_{i}$ *is the convergence time of node i*
+
+In fact, in our example, inscreasing the weight associated with the edges $(5,6)$ up to 100, leaving all others weight in the network equal to 1,  we noticed that $Tc_6$ approaches  $Tc_5$, without ever going under it. From the following table shown we can see how, with this new configuration of weights,   $Tc_{6}\simeq Tc_{5}$.
+
+|Nodes $i$ | Convergence Time|
+|--|--|
+|1|11.2141|
+|2|12.0108|
+|3|12.4916|
+|4|12.8382|
+|5|13.1102|
+|6|13.1122|
+
+We can have a better idea of the impact that the weights have on convergence time of a generic node $i$, looking at its global disagreement error (GDE), in the following we report the trend of GDE for each node in experiment one and two.
+
+GRAFICO2_GDE
+
+We can see that the behaviour of the GDE for each node in the experimet one are equidistant from each other, because all weights are set to 1.  On the other hand in the *experiment 2* we can notice that the GDE trend of nodes 6 collapses on the GDE trend of node 5. The reason for this behaviour is that, for this experiment we set $w_{6,5}=100$ .
+
+After the experiments described previously, we changed the network topografy, by adding a forward edge. From that experiment we noticed that the node, that receive the information thanks to the forward edge, reduces its convergence time in according to "euristich " rules.
+
+### Observation 3
+*If in a chain structure, like the one described previously, we add a forward edge from node $i$ to node $j$, the improvment on convergence time of node j depends on:*
+-  $$d_{li}=\sum_{k=1}^i w_{(k,k-1)}$$ 
+*The sum of the weights associated with the edges among leader node and $i$*
+
+- $$d_{ij}=\sum_{k=i}^j w_{(k,k-1)}$$
+ *The sum of the weights associated with the edges among $i$ and $j$ in the original chain structure*
+
+-  $$d_{fij}=w_{(j,i)}$$
+*The weight associated with the forward edge $(i,j)$*
+
+To better understand the behavior of node convergence , we tried different configuration of chain structures by adding for every try different edges.
+##### Configuration 1
+
+IMG_structure1
+
+##### Configuration 2
+
+IMG_structure2
+
+##### Configuration 3
+
+IMG_structure3
+
+In this experiment all weights associated with the edges for all structure are set to one. In fact, the aim now is to study the convergence time for different networks topolgy. In particular we focus our attention on node 6 because we modify only the input degree of this node and the nodes from where it gets information. The results for this experiments are shown below.
+
+GRAFICO3_GDE
+
 
 ## Tree structure
 
@@ -180,12 +262,10 @@ While, if the weights are all the same, tje convergence time only depends on the
 
 Although we weren't able to find some clear relationship between the convergence times and the network structure, we are pretty sure this same problem was already studied in the past. References like [1](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=5638610) seem to have studied this problem. Also we should be able to apply [Flow network theory](https://en.wikipedia.org/wiki/Flow_network) to study this problem. 
 
-In thi section we now discuss the chosen network, in terms of cost and performance.
-
-================DA SCRIVERE!!!!================
+In the next section we discuss the chosen network, in terms of cost and performance.
 
 # Comparison between architectures
-In order to perform these tests we choose the tree structure because we took in to consideration two factors: the structure generality and the feasibility in terms of applications domain , i.e. the mag-lev.
+In order to perform these tests we chose the tree structure because we took into consideration two factors: the structure generality and the feasibility in terms of applications domain , i.e. the mag-lev.
 The dictator and full-graph structure put us in a centralized-like context moreover trees don't have cycles  and, as said before, we found that this is a good property; hence, due to these considerations, we believe that trees are the most significant structure to analyze.  
 
 ## Switching leader signal
@@ -202,8 +282,6 @@ The outcomes of our tests, based on our metrics, are the following and they took
 | -------- | ---------- |
 | **Ramp** | **11.504** |
 | **Sine** | **5.954**  |
-
-
 
 #### 2. Complete Agents Convergence time (CACT)
 
@@ -223,7 +301,7 @@ The outcomes of our tests, based on our metrics, are the following and they took
 
 #### 4.  Global Disagreement Error (GDE)
 
-![](C:\Users\AnnaPaola\Desktop\model\projectII\img\GDE_tree.png)
+![](img/GDE_tree.png)
 
 
 
@@ -235,8 +313,6 @@ The outcomes of our tests, based on our metrics, are the following and they took
 | -------- | ---------- |
 | **Ramp** | **11.450** |
 | **Sine** | **5.954**  |
-
-
 
 #### 2. Complete Agents Convergence time (CACT)
 
@@ -252,72 +328,68 @@ The outcomes of our tests, based on our metrics, are the following and they took
 | **Ramp** | **1** | **2** | **3** | **4** | **5** | **6** |
 | **Sine** | **3** | **4** | **5** | **6** | **1** | **2** |
 
-
-
 #### 4.  Global Disagreement Error (GDE)
 
-![](C:\Users\AnnaPaola\Desktop\model\projectII\img\GDE_tree.png)
+![](img/GDE_tree.png)
 
-## Cambiando il rumore di misurazione
+## Effects of Measurement noises
 In order to perform these set of tests we decided to let c,Q and R in the default configuration (Q = 1, R = 1 and multiplicative factor of c = 10) and we changed the tipology of error in the following fashion:
 
-#### Ramp error
+### Ramp error
 
 In this case we expect the system to diverge since the error increase in time
 
-![](/home/voidjocker/Documents/University/MCCS/Modelling_prj/projectII/img/GDE c=1 Q=R=1/GDE_ramp.png)
+![](img/GDE_c=1_Q=R=1/GDE_ramp.png)
 
-#### Sine error
 
-![](/home/voidjocker/Documents/University/MCCS/Modelling_prj/projectII/img/GDE c=1 Q=R=1/GDE_sin.png)
+### Sine error
 
-#### Random error
+![](img/GDE_c=1_Q=R=1/GDE_sin.png)
 
-![](/home/voidjocker/Documents/University/MCCS/Modelling_prj/projectII/img/GDE c=1 Q=R=1/GDE_random.png)
+### Random error
 
-## Cambiando c, Q e R
+![](img/GDE_c=1_Q=R=1/GDE_random.png)
 
-In order to perform these set of tests we decided to change c,Q and R in particular cases using a random noise.
+## Effect of matrices Q e R
+
+In order to perform these set of tests we decided to change c, Q and R in particular cases using a random noise.
 
 ####  R = 1000 Q = 0.1
 
-![](/home/voidjocker/Documents/University/MCCS/Modelling_prj/projectII/img/c=10 variazione QedR/RANDOM_ERROR/errore4_Q_01_R_1000.png)  
+![](img/c=10_variazione_QedR/RANDOM_ERROR/errore4_Q_01_R_1000.png)  
 
 Having this configuration we would expect to have a worst performance with rispect to a configuration with a higher Q and  a minimized energy command signal.
 
+#### Q = 1000 R=0.1
 
-
+![](img/c=10_variazione_QedR/RANDOM_ERROR/Q_1000_R=01.png)
 #### R = 1000 Q = 1000
 
-![](/home/voidjocker/Documents/University/MCCS/Modelling_prj/projectII/img/c=10 variazione QedR/RANDOM_ERROR/errore4_R_1000_Q_1000.png)
+![](img/c=10_variazione_QedR/RANDOM_ERROR/errore4_R_1000_Q_1000.png)
 
 In this case, with a higher Q, we actually increased the performnce of the system since the order of magnitude of the error is decreased.
 
-#### Q = 1000 R=0.1
-
-
-
-![](/home/voidjocker/Documents/University/MCCS/Modelling_prj/projectII/img/c=10 variazione QedR/RANDOM_ERROR/Q_1000_R=01.png)
-
 #### Q = 0.1 R = 0.1
 
-![](/home/voidjocker/Documents/University/MCCS/Modelling_prj/projectII/img/c=10 variazione QedR/RANDOM_ERROR/Q_01_R_01.png)
+![](img/c=10_variazione_QedR/RANDOM_ERROR/Q_01_R_01.png)
 
 As expected this configuration has a behaviour analogous to the one Q = 1000, R=1000 since their ratio is the same.
 
+
+## Effect of coupling gain
 Now we decided to keep fixed Q and R to one and changed the multiplicative factor of c.
 
 #### Numerator equals 1
 
-![](/home/voidjocker/Documents/University/MCCS/Modelling_prj/projectII/img/GDE c=1 Q=R=1/GDE_random.png)
+![](img/GDE_c=1_Q=R=1/GDE_random.png)
 
 #### Numerator equals 10
 
-![](/home/voidjocker/Documents/University/MCCS/Modelling_prj/projectII/img/GDE C=10 Q=R=1/error_random.png)
+![](img/GDE_C=10_Q=R=1/error_random.png)
 
 #### Numerator equals 100
 
-![](/home/voidjocker/Documents/University/MCCS/Modelling_prj/projectII/img/GDE c=100 Q=R=1/GDE_random.png)
+![](img/GDE_c=100_Q=R=1/GDE_random.png)
 
 # Modified theory
 
