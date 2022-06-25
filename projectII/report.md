@@ -332,6 +332,8 @@ The outcomes of our tests, based on our metrics, are the following and they took
 
 ![](img/GDE_tree.png)
 
+==Chi converge prima? E perché? C'è differenza nell'errore??==
+
 ## Effects of Measurement noises
 In order to perform these set of tests we decided to let c,Q and R in the default configuration (Q = 1, R = 1 and multiplicative factor of c = 10) and we changed the tipology of error in the following fashion:
 
@@ -341,7 +343,6 @@ In this case we expect the system to diverge since the error increase in time
 
 ![](img/GDE_c=1_Q=R=1/GDE_ramp.png)
 
-
 ### Sine error
 
 ![](img/GDE_c=1_Q=R=1/GDE_sin.png)
@@ -349,6 +350,7 @@ In this case we expect the system to diverge since the error increase in time
 ### Random error
 
 ![](img/GDE_c=1_Q=R=1/GDE_random.png)
+==Descrivere la robustezza del sistema==
 
 ## Effect of matrices Q e R
 
@@ -375,6 +377,8 @@ In this case, with a higher Q, we actually increased the performnce of the syste
 
 As expected this configuration has a behaviour analogous to the one Q = 1000, R=1000 since their ratio is the same.
 
+==Mostrare unico plot di u in cui si cambia R e dire che in generale più grande è R più piccolo è u==
+
 
 ## Effect of coupling gain
 Now we decided to keep fixed Q and R to one and changed the multiplicative factor of c.
@@ -390,6 +394,8 @@ Now we decided to keep fixed Q and R to one and changed the multiplicative facto
 #### Numerator equals 100
 
 ![](img/GDE_c=100_Q=R=1/GDE_random.png)
+
+==Fare una simulaizone con sinewave e tempo grande (fino a convergenza) e vedi se convergono prima i nodi col peso 100 o quelli 1 E scrivi che c'è una correlazione tra gli autovalori di L+G e come questi autovalori influiscono sulla convergenza==
 
 # Modified theory
 
