@@ -14,18 +14,63 @@ if type == "chain"
         case -1
             png_vct = 4;
         case 1
-            png_vct=[1,0,0,0,0,0]';
-            adj_mtx=diag([1,1,1,1,1],-1);
-        case 2
-            png_vct=[1,0,0,0,0,0]';
-            adj_mtx=diag([2,3,4,5,6],-1);
-        case 3
-            png_vct=[6,0,0,0,0,0]';
-            adj_mtx=diag([5,4,3,2,1],-1);
-        case 4 
-            q=rand(1,1)*10;
-            png_vct=[q,0,0,0,0,0]';
-            adj_mtx=diag(rand(1,5).*10,-1);
+              png_vct=[1,0,0,0,0,0]';
+              adj_mtx=diag([1,1,1,1,1],-1)
+         case 2
+             png_vct=[1,0,0,0,0,0]';
+             adj_mtx=diag([1,1,1,1,100],-1);
+         case 3
+             png_vct=[1,0,0,0,0,0]';
+             adj_mtx=diag([1,1,1,1,0],-1);
+             adj_mtx(6,3)=1
+         case 4
+             png_vct=[1,0,0,0,0,0]';
+             adj_mtx=diag([1,1,1,1,1],-1);
+             adj_mtx(6,3)=1
+         case 5
+             png_vct=[1,0,0,0,0,0]';
+             adj_mtx=diag([1,1,1,1,1],-1);
+             adj_mtx(6,4)=1
+
+%     case 3
+%         png_vct=[6,0,0,0,0,0]';
+%         adj_mtx=diag([5,4,3,2,1],-1);
+%     case 4 
+%         q=rand(1,1)*10;
+%         png_vct=[q,0,0,0,0,0]';
+%         adj_mtx=diag(rand(1,5).*10,-1);
+%     case 5
+%         png_vct=[1,0,0,0,0,0]';
+%         adj_mtx=diag([100,100,100,100,100],-1);
+%     case 6
+%         png_vct=[100,0,0,0,0,0]';
+%         adj_mtx=diag([1,1,0.5,50,1000],-1)
+%     case 7
+%         % forward edge
+%         png_vct=[1,0,0,0,0,0]';
+%         adj_mtx=diag([1,1,1,1,1],-1);
+%         % node 4 takes information from node 1
+%         adj_mtx(4,1)=1;
+%     case 8
+%         png_vct=[1,0,0,0,0,0]';
+%         adj_mtx=diag([1,1,1,1,1],-1);
+%         % node 4 takes information from node 2
+%         adj_mtx(4,2)=1
+%     case 1
+%         png_vct=[1,0,0,0,0,0];
+%         adj_mtx=diag([1,1,1,100,100],-1);
+%         adj_mtx(6,4)=60;
+%     case 2
+%         png_vct=[1,0,0,0,0,0];
+%         adj_mtx=diag([1,1,1,100,100],-1);
+%     case 3
+%         png_vct=[1,0,0,0,0,0];
+%         adj_mtx=diag([1,1,1,100,0],-1);
+%         adj_mtx(6,4)=60;
+%     case 4
+%         png_vct=[1,0,0,0,0,0];
+%         adj_mtx=diag([1,1,1,100,100],-1);
+%         adj_mtx(6,4)=60;
     end
 elseif type == "doublechain"
     switch(n) 

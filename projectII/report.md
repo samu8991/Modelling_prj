@@ -5,8 +5,8 @@
 
 # Introduction 
 
-This project implements a system of 6 distribuited magnetic levitation systems, linearized in an equilibrium point. We applied the theory as described in chapter 3 of the book [Cooperative Control of Multi-Agent Systems](https://link.springer.com/book/10.1007/978-1-4471-5574-4). 
-In the first section we briefly explain the simulink model and the code used for the simulations, as well as the other files of the project. The second section briefly analize the performance of different network structures in terms of Global Disagreement Error on the output of the systems. The third section is dedicated to the comparison of the performances when using either a distributed observer or a local one. Finally, the last section explains a slightly different architecture that works for our systems, even tough we could not proove the general case.
+This project implements a system of 6 distributed magnetic levitation systems, linearized in an equilibrium point. We applied the theory as described in chapter 3 of the book [Cooperative Control of Multi-Agent Systems](https://link.springer.com/book/10.1007/978-1-4471-5574-4). 
+In the first section, we briefly explain the simulink model and the code used for the simulations, as well as the other files of the project. The second section briefly analyzes the performance of different network structures in terms of Global Disagreement Error on the output of the systems. The third section is dedicated to the comparison between performances of using either a distributed observer or a local one. Finally, the last section explains a slightly different architecture that works for our systems, even tough we could not prove the general case.
 
 # Files arrangement
 
@@ -14,14 +14,14 @@ For information about the simulink and matlab implementation, please refer to th
 
 There are 4 types of files.
 
-## `stable_` prefix
-These files are related to the theory as seen in class lessons. Each magnetic levitator is controlled using the pole-placement method. In order to do that, since the state of the system is not measureable, we neede to add an observer which provided the state, given its output.
+## `stable_` Prefix
+These files are related to the theory as seen in class lessons. Each magnetic levitator is controlled using the pole-placement method. In order to do that, since the state of the system is not measurable, we needed to add an observer which provided the state, given its output.
 
 The "placed poles" are chosen in order to impose a specific trajectory to the leader. 
 
-Each other agent is virtually connected to all the otget agent. Whether the connection actually exists depend on the adjacency matrix of the graph.
+Each other agent is virtually connected to all the other agent. Whether the connection actually exists depend on the adjacency matrix of the graph.
 
-Each agent also have an observer as explained by the theory, which serve the purpose of estimating the controlled state to calculate $\epsilon$. This kind of architecture is a bit redundant, since we already have an observer, but it is necessary to underline that the two observer estimate different states, specifically: the internal one estimate the actual state of the maglev, the external one estimate the state of the **controlled maglev**.
+Each agent also have an observer as explained by the theory, which serve the purpose of estimating the controlled state to calculate $\epsilon$. This kind of architecture is a bit redundant, since we already have an observer, but it is necessary since the two observer estimate different states, specifically: the internal one estimate the actual state of the maglev, the external one estimate the state of the **controlled maglev**.
 
 ## `alternative_` prefix
 
@@ -43,7 +43,8 @@ Each of these files contains a different configuration for the system. The file 
 > If no otherwise specified, the convergence times correspond to the time $t^\star$ such that the error $|y_i(t) - y_0(t)| < 100\ \  |\ \  t \ge t^\star$, 
 
 ## Chain structure
-We performed several experiments with chain structure. In the cases where there wasn't a forward edge between follwer nodes, or loop structures in the chain.
+We performed several experiments with chain structure. In the cases where there was not a forward edge between follwer nodes, or loop structures in the chain.
+
 ![](img/chain_general.png)
 
 ### Observation 1
@@ -53,6 +54,7 @@ $$
 Tc_{j}>Tc_{i}  
 $$
 *where:*
+
 -  $Tc_{j}$ *is the convergence time of node j*
 - $Tc_{i}$ *is the convergence time of node i*
 
@@ -176,17 +178,12 @@ The following figures illustrates the step response and the **global disagreemen
 
 The first notable thing is that the convergence time does not depend on the value of the weight itself, but rather there seems to exist a relationship which quantifies the similarity of the behaviours and the convergence times.
 
-Where $d$ is the depth of the node and each $w_j$ is the weight of the edge on the j-th step.
-- the convergence time,
-- the depth of the considered node,
-- the product of the weights of the traversed edges.
-
 Indeed, when comparing `Configuration 1` and `Configuration 5` (in which the difference is only the magnitude of the weights) we can clearly see that they have the same behaviour even though completely different weights. 
 On the other hand, `Configurations` `1`, `2` and `4` have increasingly similar behaviour, with the slower nodes matching the behaviour of the faster ones.
 
 Another important aspect to underly is the _class of convergence_. In the context of the first five configurations, only two curves are clearly visibile. This happens because nodes `s1` and `s2` converge at the same time: they _belong to the same class_.  The same can be said for nodes `s3`, `s4`, `s5` and `s6`.
 
-Altough there seems to be a simple relationship, the next example demonstrates things are more complicated. 
+Although there seems to be a simple relationship, the next example demonstrates things are more complicated. 
 
 In `Configuration 6` the tree is _unbalanced_ and this fact heavily modify the behaviour. The table shows the convergence times of the nodes for this configuration in increasing order:
 
@@ -264,7 +261,7 @@ This structure is peculiar, since it produces always the same results, no matter
 | --- | ---------------- | ------- | 
 | 1   | Equal weights    | 1       | 
 | 2   | Equal weights    | 100     | 
-| 3   | Eandom weights 1 | random  | 
+| 3   | Random weights 1 | random  | 
 | 4   | Random weights 2 | random  | 
 
 ![](img/complete_step_response_errors.png)
