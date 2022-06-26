@@ -155,7 +155,7 @@ In the third configuration node 6 take information from node 4, a node that is f
 
 The tree structure is shown in the following figure
 
-![](tree_general.png)
+![](img/tree_general.png)
 
 We anayzed 6 different network configurations with different weights. Those are summurized in the following table. 
 
@@ -239,7 +239,7 @@ Configuration `5` is interesting because it shows us what seems to be a super-ex
 ## Double-chain structure
 The double-chain structure is a tree in which the leader has 2 childs and each child has only one child, as follows.
 
-![](double_chain_general.png)
+![](img/double_chain_general.png)
 
 Analyzing this structure and pairing the results with the _signle_-chain structure, it appears very clear that there is inverse proportional relationship between the depth and the convergence time. This result corroborates the unknown relationship of the graph structure, which shuold be general for _one-way_ networks.
 
@@ -437,7 +437,7 @@ Now we decided to keep fixed Q and R to one and changed the multiplicative facto
 
 #### Numerator equals 10
 
-![](img/GDE_C=10_Q=R=1/error_random.png)
+![](img/GDE_c=10_Q=R=1/error_random.png)
 
 #### Numerator equals 100
 
